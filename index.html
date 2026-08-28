@@ -3,26 +3,42 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
     <title>Elisya Books</title>
+
     <style>
         :root {
             --bg-color: #ffffff;
-            --text-color: #333333;
-            --card-bg: #f9f9f9;
-            --border-color: #ddd;
+            --text-color: #252525;
+            --card-bg: #f8f9fb;
+            --border-color: #dedede;
             --accent-color: #0066cc;
+            --accent-dark: #004b99;
+            --muted-text: #666666;
+            --reader-bg: #fffdf8;
         }
 
         [data-theme="dark"] {
             --bg-color: #121212;
-            --text-color: #e0e0e0;
+            --text-color: #eeeeee;
             --card-bg: #1e1e1e;
-            --border-color: #333;
+            --border-color: #383838;
             --accent-color: #4da6ff;
+            --accent-dark: #247dcc;
+            --muted-text: #aaaaaa;
+            --reader-bg: #191919;
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
         }
 
         body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
             background-color: var(--bg-color);
             color: var(--text-color);
             margin: 0;
@@ -30,108 +46,201 @@
             transition: background-color 0.3s ease, color 0.3s ease;
         }
 
+        /* ---------------- HEADER ---------------- */
+
         header {
-            max-width: 900px;
-            margin: 20px auto;
-            padding: 0 20px;
+            width: min(100% - 40px, 1000px);
+            margin: 25px auto 0;
+        }
+
+        .banner-container {
+            width: 100%;
+            overflow: hidden;
+            border-radius: 16px;
+            box-shadow: 0 5px 18px rgba(0, 0, 0, 0.10);
         }
 
         .banner-container img {
+            display: block;
             width: 100%;
-            max-height: 200px;
+            height: 190px;
             object-fit: cover;
-            border-radius: 8px;
         }
 
         .controls {
             display: flex;
-            justify-content: space-between;
             align-items: center;
-            margin-top: 15px;
+            gap: 15px;
+            margin-top: 18px;
+        }
+
+        .site-title {
+            margin: 0;
+            font-size: 1.9rem;
+            white-space: nowrap;
+        }
+
+        .search-box {
+            margin-left: auto;
         }
 
         .search-box input {
-            padding: 8px 12px;
+            width: 220px;
+            padding: 11px 14px;
             border: 1px solid var(--border-color);
-            border-radius: 4px;
+            border-radius: 10px;
             background: var(--card-bg);
             color: var(--text-color);
+            outline: none;
+            font-size: 0.95rem;
+            transition: 0.2s ease;
+        }
+
+        .search-box input:focus {
+            border-color: var(--accent-color);
+            box-shadow: 0 0 0 3px rgba(0, 102, 204, 0.10);
         }
 
         .theme-btn {
-            padding: 8px 16px;
+            padding: 10px 15px;
             cursor: pointer;
             border: 1px solid var(--border-color);
-            border-radius: 4px;
+            border-radius: 10px;
             background: var(--card-bg);
             color: var(--text-color);
-            font-weight: bold;
+            font-weight: 600;
+            transition: 0.2s ease;
+            white-space: nowrap;
         }
 
+        .theme-btn:hover {
+            border-color: var(--accent-color);
+            color: var(--accent-color);
+        }
+
+        /* ---------------- ANNOUNCEMENT ---------------- */
+
         .announcement-bar {
-            background: linear-gradient(135deg, #0066cc, #004080);
+            width: min(100% - 40px, 1000px);
+            background: linear-gradient(135deg, var(--accent-color), var(--accent-dark));
             color: #ffffff;
             padding: 16px 20px;
             text-align: center;
-            font-size: 1.25rem;
+            font-size: 1.08rem;
             font-weight: 700;
-            letter-spacing: 0.5px;
-            margin: 20px auto;
-            max-width: 900px;
-            border-radius: 10px;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+            letter-spacing: 0.3px;
+            margin: 22px auto;
+            border-radius: 12px;
+            box-shadow: 0 5px 16px rgba(0, 0, 0, 0.13);
         }
 
+        /* ---------------- MAIN ---------------- */
+
         main {
-            max-width: 900px;
+            width: min(100% - 40px, 1000px);
             margin: 0 auto;
-            padding: 0 20px 40px 20px;
+            padding-bottom: 50px;
         }
+
+        #books h2 {
+            font-size: 1.7rem;
+            margin: 35px 0 15px;
+        }
+
+        /* ---------------- BOOK CARD ---------------- */
 
         .book-card {
             display: flex;
-            gap: 20px;
+            gap: 25px;
             background: var(--card-bg);
             border: 1px solid var(--border-color);
-            padding: 20px;
-            border-radius: 8px;
+            padding: 24px;
+            border-radius: 15px;
             margin-top: 15px;
+            box-shadow: 0 5px 18px rgba(0, 0, 0, 0.05);
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+        }
+
+        .book-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 22px rgba(0, 0, 0, 0.08);
         }
 
         .book-cover {
-            width: 120px;
-            height: 170px;
+            width: 145px;
+            height: 205px;
             object-fit: cover;
-            border-radius: 4px;
+            border-radius: 8px;
             background-color: var(--border-color);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.18);
+            flex-shrink: 0;
         }
 
         .book-cover-empty {
-            width: 120px;
-            height: 170px;
-            border-radius: 4px;
-            border: 1px dashed var(--border-color);
+            width: 145px;
+            height: 205px;
+            border-radius: 8px;
+            border: 2px dashed var(--border-color);
             background-color: transparent;
+            flex-shrink: 0;
+        }
+
+        .book-info {
+            flex: 1;
+        }
+
+        .book-info h3 {
+            font-size: 1.4rem;
+            margin: 3px 0 12px;
+        }
+
+        .book-info p {
+            line-height: 1.6;
+            color: var(--muted-text);
+        }
+
+        .book-genre {
+            color: var(--accent-color) !important;
+            font-weight: 700;
+            margin: 8px 0;
+        }
+
+        .book-summary {
+            margin-top: 12px;
+        }
+
+        .book-summary strong {
+            color: var(--text-color);
         }
 
         .book-info button {
             background-color: var(--accent-color);
             color: white;
             border: none;
-            padding: 10px 16px;
-            border-radius: 4px;
+            padding: 11px 18px;
+            border-radius: 9px;
             cursor: pointer;
             margin-top: 10px;
             font-weight: bold;
+            font-size: 0.95rem;
+            transition: 0.2s ease;
         }
+
+        .book-info button:hover {
+            background-color: var(--accent-dark);
+            transform: translateY(-1px);
+        }
+
+        /* ---------------- READER ---------------- */
 
         #book-reader-view {
             display: none;
-            background: var(--card-bg);
+            background: var(--reader-bg);
             border: 1px solid var(--border-color);
             padding: 30px;
-            border-radius: 12px;
-            margin-top: 20px;
+            border-radius: 15px;
+            margin-top: 25px;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.06);
         }
 
         .reader-header {
@@ -139,28 +248,56 @@
             gap: 30px;
             align-items: flex-start;
             border-bottom: 2px solid var(--border-color);
-            padding-bottom: 20px;
-            margin-bottom: 20px;
+            padding-bottom: 25px;
+            margin-bottom: 25px;
         }
 
         .reader-cover {
-            width: 160px;
-            height: 230px;
+            width: 170px;
+            height: 240px;
             object-fit: cover;
-            border-radius: 8px;
-            box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+            border-radius: 9px;
+            box-shadow: 0 6px 18px rgba(0, 0, 0, 0.20);
+            flex-shrink: 0;
+        }
+
+        .reader-info h2 {
+            margin-top: 0;
+            font-size: 1.8rem;
+        }
+
+        .reader-info p {
+            color: var(--muted-text);
+            line-height: 1.6;
+        }
+
+        .reader-genre {
+            color: var(--accent-color) !important;
+            font-weight: 700;
         }
 
         .back-btn {
             background: #e74c3c;
             color: white;
             border: none;
-            padding: 8px 16px;
-            border-radius: 4px;
+            padding: 10px 17px;
+            border-radius: 8px;
             cursor: pointer;
-            margin-bottom: 15px;
+            margin-bottom: 18px;
             font-weight: bold;
+            transition: 0.2s ease;
         }
+
+        .back-btn:hover {
+            background: #c0392b;
+        }
+
+        #book-reader-view h3 {
+            font-size: 1.35rem;
+            margin-bottom: 12px;
+        }
+
+        /* ---------------- ACCORDION ---------------- */
 
         .accordion-item {
             border-bottom: 1px solid var(--border-color);
@@ -173,274 +310,1076 @@
             border: none;
             outline: none;
             text-align: left;
-            padding: 14px 10px;
-            font-size: 1.1rem;
+            padding: 16px 12px;
+            font-size: 1.08rem;
             font-weight: bold;
             color: var(--accent-color);
             cursor: pointer;
             display: flex;
             justify-content: space-between;
             align-items: center;
+            gap: 15px;
             transition: background 0.2s ease;
+            border-radius: 8px;
         }
 
         .accordion-header:hover {
-            background-color: rgba(0,0,0,0.03);
+            background-color: rgba(0, 102, 204, 0.06);
         }
 
         .accordion-content {
             display: none;
-            padding: 15px 20px;
+            padding: 22px;
             background: var(--bg-color);
-            border-radius: 6px;
-            margin: 10px 0 15px 0;
-            white-space: pre-line;
-            line-height: 1.8;
+            border-radius: 9px;
+            margin: 5px 0 18px;
+            line-height: 1.9;
             font-size: 1.05rem;
             border: 1px solid var(--border-color);
+
+            /* ÖNEMLİ:
+               Kitaptaki \n ve \n\n boşluklarını korur. */
+            white-space: pre-wrap;
+            overflow-wrap: break-word;
         }
 
+        /* ---------------- FOOTER ---------------- */
+
         footer {
-            max-width: 900px;
-            margin: 40px auto 20px auto;
-            padding: 20px;
+            width: min(100% - 40px, 1000px);
+            margin: 30px auto 20px;
+            padding: 30px 20px 20px;
             border-top: 1px solid var(--border-color);
             text-align: center;
+        }
+
+        #about h2 {
+            margin-top: 0;
+        }
+
+        #about p {
+            max-width: 750px;
+            margin: auto;
+            line-height: 1.7;
+            color: var(--muted-text);
         }
 
         .copyright {
             opacity: 0.6;
             font-size: 0.9rem;
-            margin-top: 15px;
+            margin-top: 22px;
+        }
+
+        /* ---------------- MOBİL ---------------- */
+
+        @media (max-width: 700px) {
+
+            header,
+            main,
+            footer,
+            .announcement-bar {
+                width: min(100% - 24px, 1000px);
+            }
+
+            header {
+                margin-top: 12px;
+            }
+
+            .banner-container {
+                border-radius: 12px;
+            }
+
+            .banner-container img {
+                height: 125px;
+            }
+
+            .controls {
+                display: grid;
+                grid-template-columns: 1fr auto;
+                gap: 10px;
+                margin-top: 14px;
+            }
+
+            .site-title {
+                font-size: 1.45rem;
+            }
+
+            .search-box {
+                grid-column: 1 / -1;
+                grid-row: 2;
+                width: 100%;
+                margin: 0;
+            }
+
+            .search-box input {
+                width: 100%;
+                padding: 12px 13px;
+            }
+
+            .theme-btn {
+                justify-self: end;
+                padding: 9px 12px;
+                font-size: 0.85rem;
+            }
+
+            .announcement-bar {
+                margin: 15px auto;
+                padding: 13px 12px;
+                font-size: 0.92rem;
+                border-radius: 10px;
+            }
+
+            #books h2 {
+                font-size: 1.45rem;
+                margin-top: 25px;
+            }
+
+            .book-card {
+                flex-direction: column;
+                align-items: center;
+                padding: 18px;
+                gap: 18px;
+                text-align: center;
+            }
+
+            .book-cover,
+            .book-cover-empty {
+                width: 145px;
+                height: 205px;
+            }
+
+            .book-info {
+                width: 100%;
+            }
+
+            .book-info h3 {
+                font-size: 1.2rem;
+            }
+
+            .book-info p {
+                font-size: 0.95rem;
+            }
+
+            .book-info button {
+                width: 100%;
+                padding: 12px;
+            }
+
+            #book-reader-view {
+                padding: 18px;
+                margin-top: 15px;
+                border-radius: 12px;
+            }
+
+            .reader-header {
+                flex-direction: column;
+                align-items: center;
+                text-align: center;
+                gap: 18px;
+                padding-bottom: 20px;
+            }
+
+            .reader-cover {
+                width: 150px;
+                height: 215px;
+            }
+
+            .reader-info h2 {
+                font-size: 1.45rem;
+            }
+
+            .back-btn {
+                width: 100%;
+                padding: 11px;
+            }
+
+            .accordion-header {
+                font-size: 0.98rem;
+                padding: 14px 8px;
+            }
+
+            .accordion-content {
+                padding: 17px;
+                font-size: 0.98rem;
+                line-height: 1.8;
+            }
+
+            footer {
+                width: min(100% - 24px, 1000px);
+                padding-left: 10px;
+                padding-right: 10px;
+            }
+        }
+
+        /* ---------------- KÜÇÜK TELEFON ---------------- */
+
+        @media (max-width: 400px) {
+
+            .site-title {
+                font-size: 1.25rem;
+            }
+
+            .theme-btn {
+                font-size: 0.78rem;
+            }
+
+            .book-cover,
+            .book-cover-empty {
+                width: 125px;
+                height: 178px;
+            }
+
+            .reader-cover {
+                width: 135px;
+                height: 195px;
+            }
+
+            .accordion-content {
+                padding: 14px;
+                font-size: 0.94rem;
+            }
         }
     </style>
 </head>
+
 <body>
 
+    <!-- ================= HEADER ================= -->
+
     <header>
+
         <div class="banner-container">
             <img src="images/banner.jpg" alt="Elisya Books Banner">
         </div>
+
         <div class="controls">
-            <h1>Elisya Books</h1>
+
+            <h1 class="site-title">Elisya Books</h1>
+
             <div class="search-box">
-                <input type="text" placeholder="Sitede ara...">
+                <input
+                    type="text"
+                    id="search-input"
+                    placeholder="Sitede ara..."
+                    aria-label="Sitede ara"
+                >
             </div>
-            <button class="theme-btn" id="theme-toggle-btn">Karanlık Mod</button>
+
+            <button
+                class="theme-btn"
+                id="theme-toggle-btn"
+                type="button"
+            >
+                Karanlık Mod
+            </button>
+
         </div>
+
     </header>
+
+
+    <!-- ================= DUYURU ================= -->
 
     <div class="announcement-bar" id="announcement">
         Elisya Books sitesi şimdi açıldı!
     </div>
 
+
+    <!-- ================= ANA İÇERİK ================= -->
+
     <main>
+
         <div id="main-content">
+
             <section id="books">
+
                 <h2>Kitaplarım</h2>
-                
-                <!-- Okyanus Dalgaları -->
-                <div class="book-card">
-                    <img src="images/kapak.jpg" alt="Okyanus Dalgaları Kapağı" class="book-cover">
+
+
+                <!-- ================= OKYANUS DALGALARI ================= -->
+
+                <div class="book-card" data-search="okyanus dalgaları aksiyon gerilim cinayet dram">
+
+                    <img
+                        src="images/kapak.jpg"
+                        alt="Okyanus Dalgaları Kapağı"
+                        class="book-cover"
+                    >
+
                     <div class="book-info">
-                        <h3>Okyanus Dalgaları (DEVAM EDİYOR)</h3>
-                        <p><strong>Bölüm Sayısı:</strong> 5 Bölüm</p>
-                        <button type="button" id="read-book-btn">Kitabı Oku</button>
+
+                        <h3>
+                            Okyanus Dalgaları
+                            <span style="font-size:0.75em; color:var(--accent-color);">
+                                (DEVAM EDİYOR)
+                            </span>
+                        </h3>
+
+                        <p>
+                            <strong>Bölüm Sayısı:</strong> 5 Bölüm
+                        </p>
+
+                        <p class="book-genre">
+                            Aksiyon • Gerilim • Cinayet • Dram
+                        </p>
+
+                        <p class="book-summary">
+                            <strong>Konu:</strong>
+                            Rusya'nın başarılı yazılım mühendislerinden Natalia Deesmi,
+                            karanlık bir örgütün hedefi haline gelir. Geçmişinden gelen
+                            sırlar ortaya çıktıkça Natalia, hem kendisini hem de gerçekleri
+                            korumak için tehlikeli bir mücadelenin içine sürüklenir.
+                        </p>
+
+                        <button
+                            type="button"
+                            id="read-book-btn"
+                        >
+                            Kitabı Oku
+                        </button>
+
                     </div>
+
                 </div>
 
-                <!-- Yeni Kitap -->
-                <div class="book-card">
+
+                <!-- ================= YENİ KİTAP ================= -->
+
+                <div
+                    class="book-card"
+                    data-search="yeni kitap yakında"
+                >
+
                     <div class="book-cover-empty"></div>
+
                     <div class="book-info">
+
                         <h3>Yeni Kitap</h3>
-                        <p>Yakında yayında olacak...!</p>
+
+                        <p>
+                            Yakında yayında olacak...!
+                        </p>
+
                     </div>
+
                 </div>
+
             </section>
+
         </div>
 
-        <!-- Kitap Okuyucu Görünümü -->
+
+        <!-- ================= KİTAP OKUMA EKRANI ================= -->
+
         <div id="book-reader-view">
-            <button class="back-btn" type="button" id="close-reader-btn">← Ana Sayfaya Dön</button>
+
+            <button
+                class="back-btn"
+                type="button"
+                id="close-reader-btn"
+            >
+                ← Ana Sayfaya Dön
+            </button>
+
+
             <div class="reader-header">
-                <img src="images/kapak.jpg" alt="Okyanus Dalgaları Kapağı" class="reader-cover">
-                <div>
-                    <h2 style="margin-top:0;">Okyanus Dalgaları</h2>
-                    <p><strong>Bölüm Sayısı:</strong> 5 Bölüm</p>
-                    <p>Aşağıdan okumak istediğiniz bölümün üzerine tıklayabilirsiniz.</p>
+
+                <img
+                    src="images/kapak.jpg"
+                    alt="Okyanus Dalgaları Kapağı"
+                    class="reader-cover"
+                >
+
+                <div class="reader-info">
+
+                    <h2>
+                        Okyanus Dalgaları
+                    </h2>
+
+                    <p>
+                        <strong>Bölüm Sayısı:</strong>
+                        5 Bölüm
+                    </p>
+
+                    <p class="reader-genre">
+                        Aksiyon • Gerilim • Cinayet • Dram
+                    </p>
+
+                    <p>
+                        Rusya'nın başarılı yazılım mühendislerinden Natalia Deesmi,
+                        karanlık bir örgütün hedefi haline gelir. Geçmişinden gelen
+                        sırlar ortaya çıktıkça Natalia, tehlikeli bir mücadelenin
+                        ortasında kalır.
+                    </p>
+
+                    <p>
+                        Aşağıdan okumak istediğiniz bölüme tıklayabilirsiniz.
+                    </p>
+
                 </div>
+
             </div>
 
+
             <h3>Bölümler</h3>
+
             <div id="accordion-container"></div>
+
         </div>
+
     </main>
 
+
+    <!-- ================= FOOTER ================= -->
+
     <footer>
-        <section id="about" style="margin-bottom: 20px;">
+
+        <section
+            id="about"
+            style="margin-bottom: 20px;"
+        >
+
             <h2>Hakkımda</h2>
-            <p>Yazar hakkında: 2012, İstanbul doğumlu yazar Elisya Aykanat, Okyanus Dalgaları isimli ilk kitabını kendi sitesinde yayınlamasıyla hayallerinin peşinden gitme yolunda adım atmış bir yazardır. Destek olmaya ne dersiniz...?</p>
+
+            <p>
+                Yazar hakkında: 2012, İstanbul doğumlu yazar Elisya Aykanat,
+                Okyanus Dalgaları isimli ilk kitabını kendi sitesinde yayınlamasıyla
+                hayallerinin peşinden gitme yolunda adım atmış bir yazardır.
+                Destek olmaya ne dersiniz...?
+            </p>
+
         </section>
+
         <div class="copyright">
             © 2026 Elisya Books. Tüm hakları saklıdır.
         </div>
+
     </footer>
 
+
+    <!-- ===================================================== -->
+    <!-- ======================= JAVASCRIPT ================== -->
+    <!-- ===================================================== -->
+
     <script>
+
+        /* =====================================================
+           KİTAP VERİLERİ
+           ===================================================== */
+
         const bookData = [
+
             {
                 title: "TEŞEKKÜR",
-                content: `Bu kitabı yazma sürecim boyunca her zaman yanımda olan, beni destekleyen ve kitabımın kapak tasarımcısı olan canım anneme, daha sonra sevgisiyle, gölgesiyle, arkamda oluşuyla, varlığıyla yolumu her daim aydınlatan canım babama tüm kalbimle teşekkür ederim. Yalnızca bu kitabın değil, hayatımın da en büyük mimarları sizlersiniz.\n\nVe son olarak, bu kitabı okuyan ve yolculuğuma eşlik eden tüm okurlarıma yürekten teşekkür eder, keyifli okumalar dilerim.`
+
+                content: `Bu kitabı yazma sürecim boyunca her zaman yanımda olan, beni destekleyen ve kitabımın kapak tasarımcısı olan canım anneme, daha sonra sevgisiyle, gölgesiyle, arkamda oluşuyla, varlığıyla yolumu her daim aydınlatan canım babama tüm kalbimle teşekkür ederim. Yalnızca bu kitabın değil, hayatımın da en büyük mimarları sizlersiniz.
+
+Ve son olarak, bu kitabı okuyan ve yolculuğuma eşlik eden tüm okurlarıma yürekten teşekkür eder, keyifli okumalar dilerim.`
+
             },
+
             {
                 title: "GİRİŞ",
-                content: `Kendilerini limanın güvenli sığlığına kilitleyenler; okyanusun tehlikeli, karanlık ama bir o kadar da ihtişamlı güzelliğini asla göremezler. Fırtınadan korkan gemiler limanda çürürken, dalgalarla savaşmayı göze alanlar rotayı her zaman kendileri çizer. Ben de yıllarca kendi güvenli limanımda, kendi inşa ettiğim o devasa duvarların arkasında yaşadım. Rusya'nın en büyük teknoloji şirketinin zirvesinde, parmaklarımın ucundaki kodlarla dünyaya yön verirken güvende olduğumu sanıyordum. Güçlüydüm, başarılıydım ve en önemlisi, kontrolün bende olduğuna inanıyordum.\n\nAma hayat, siz en yüksek kulenin tepesinde zaferinizi kutlarken, altınızdaki toprağı tek bir hamleyle kaydıracak kadar acımasızdır. Gerçek güç, korunaklı odalarda oturup ekranlara bakmak değil; o karanlık okyanusun tam ortasında, fırtınanın gözünün içine bakarak hayatta kalabilmektir.\n\nVe benim fırtınam, o soğuk Moskova akşamında, otoparkın loş ışığında beni bekliyordu.\n\nMesai saatimin tam bitimindeydim. Kafamın içi yüzlerce algoritma, satırlarca kod ve bitmek bilmeyen toplantıların gürültüsüyle doluydu. Fazlasıyla yorulmuştum; artık çalışacak, hatta düşünecek gücüm bile kalmamıştı. Rusya’nın en iyi yazılımcılarından olmak kolay değildi tabii. Kariyerim için 24 yaşında annemin evinden ayrılıp Moskova’ya yerleşmiş, 4 yıl boyunca çalışıp çırpınarak inşa etmiştim bu günleri. Annemin evi diyorum, çünkü henüz 12 yaşımdayken babamı kaybetmiştim. Daha doğrusu üvey babamı. Yüzünü hatırladığım söylenemezdi. Zaten oda sevmezdi beni.\n\nBen Natalia Deesmi. Doğup büyüdüğüm bu soğuk topraklarda, ülkenin en bilinen, en zengin holdinginin baş yazılım mühendisiyim. Bu dahi unvanı bazen başıma fazlasıyla bela açıyor, adımı duyanların gözü üzerime dikiliyordu ama yine de işimi, kurduğum o güvenli limanı seviyordum. Ya da sevdiğimi sanıyordum. Ta ki onunla karşılaşana kadar…`
+
+                content: `Kendilerini limanın güvenli sığlığına kilitleyenler; okyanusun tehlikeli, karanlık ama bir o kadar da ihtişamlı güzelliğini asla göremezler. Fırtınadan korkan gemiler limanda çürürken, dalgalarla savaşmayı göze alanlar rotayı her zaman kendileri çizer. Ben de yıllarca kendi güvenli limanımda, kendi inşa ettiğim o devasa duvarların arkasında yaşadım. Rusya'nın en büyük teknoloji şirketinin zirvesinde, parmaklarımın ucundaki kodlarla dünyaya yön verirken güvende olduğumu sanıyordum. Güçlüydüm, başarılıydım ve en önemlisi, kontrolün bende olduğuna inanıyordum.
+
+Ama hayat, siz en yüksek kulenin tepesinde zaferinizi kutlarken, altınızdaki toprağı tek bir hamleyle kaydıracak kadar acımasızdır. Gerçek güç, korunaklı odalarda oturup ekranlara bakmak değil; o karanlık okyanusun tam ortasında, fırtınanın gözünün içine bakarak hayatta kalabilmektir.
+
+Ve benim fırtınam, o soğuk Moskova akşamında, otoparkın loş ışığında beni bekliyordu.
+
+Mesai saatimin tam bitimindeydim. Kafamın içi yüzlerce algoritma, satırlarca kod ve bitmek bilmeyen toplantıların gürültüsüyle doluydu. Fazlasıyla yorulmuştum; artık çalışacak, hatta düşünecek gücüm bile kalmamıştı. Rusya’nın en iyi yazılımcılarından olmak kolay değildi tabii. Kariyerim için 24 yaşında annemin evinden ayrılıp Moskova’ya yerleşmiş, 4 yıl boyunca çalışıp çırpınarak inşa etmiştim bu günleri. Annemin evi diyorum, çünkü henüz 12 yaşımdayken babamı kaybetmiştim. Daha doğrusu üvey babamı. Yüzünü hatırladığım söylenemezdi. Zaten oda sevmezdi beni.
+
+Ben Natalia Deesmi. Doğup büyüdüğüm bu soğuk topraklarda, ülkenin en bilinen, en zengin holdinginin baş yazılım mühendisiyim. Bu dahi unvanı bazen başıma fazlasıyla bela açıyor, adımı duyanların gözü üzerime dikiliyordu ama yine de işimi, kurduğum o güvenli limanı seviyordum. Ya da sevdiğimi sanıyordum. Ta ki onunla karşılaşana kadar…`
+
             },
+
             {
                 title: "1. BÖLÜM: OTOPARK",
-                content: `“Aklınıza takılan başka bir soru yoksa toplantı sona ermiştir. Katılım sağladığınız için teşekkür ederiz, başka projelerde yeniden buluşmak dileğiyle iyi günler dilerim…” Saatler süren toplantı nihayet sona erdiğinde, neredeyse çatlamakta olan başımla zoraki gülümsemeye çalışarak odadan çıkan çalışanlarla sırayla el sıkışıyor, teşekkür ediyordum. Sadece Çağla ve ben kalana kadar herkes odadan çıktığında, ayakta bile duramayacak kadar yorulduğumun yeni farkına varıyordum.\n\nÇağla arkamdan yaklaşarak omzuma dokundu. “Yorgun görünüyorsun... Kafeteryaya ineceğim işin yoksa bana eşlik eder misin? Hem sıcak bir şeyler içmek iyi gelir.” Çağla’nın bu teklifine karşılık başımı yorgunca aşağı yukarı sallayarak gülümsemeye çalıştım. Konuşacak halim bile yoktu!\n\nBeraber odadan çıktığımızda koridorun sonuna gelince durdum. “İstersen sen in, ben de eşyalarımı toplayıp geleyim. Bugün daha fazla çalışmayacağım, bir şeyler içtikten sonra şirketten çıkarım.” Çağla anlayışla başını salladı. “O sırada siparişleri veririm bende. Ne içiyorsun?” Pek de bir şey içesim yoktu aslında, teklifini kafamı dağıtıp dinlenmek için kabul etmiştim. “Sen ne alacaksan bana da ondan söyleyebilirsin.” Dedim hızlıca. Oda yeniden onaylarcasına başını sallayıp yanımdan ayrıldı.\n\nBende kapının üzerinde ‘Yazılım Mühendisi Natalia Deesmi’ yazan odama girerek hızlıca eşyalarımı topladım ve kapıyı da kilitleyerek kafeteryaya inmek üzere asansöre ilerledim.\n\nAsansörün kapıları, büyük ve ihtişamlı şirketimizin en alt katına –yani kafeteryaya- açıldığında, uzun siyah topuklularımın üzerinde bir kuğu gibi süzülerek Çağla’nın oturduğu masaya ilerledim. Her ne kadar yorgun olsam da bundan asla ödün vermiyor, her seferinde mükemmel davranmaya çalışarak dikkatleri üzerime topluyordum. Bundan rahatsız olduğumda söylenemezdi. Küçüklüğümden beri hep en gözde olmayı isteyen, şımarık bir kızdım. Anne ve babamın tahammül edemezdi şımarıklığıma. Gerçi onlar bana da tahammül edemezdi. Hep nefret ederlerdi benden. Şimdi ise büyümüş, kendi ayaklarımın üzerinde durabilecek yaşa çoktan gelmiştim fakat karakterimden hiçbir şey kaybetmiş değildim. Hala gözde olmak beni mutlu ediyor, çocuk gibi şımarıyordum. Ama gün geçtikçe aile sevgisi görmemiş olmanın kırgınlığı da giderek büyüyordu içimde.\n\nGözlerim Çağla ile buluştuğunda çoktan karşısındaki yerimi almıştım. Benim oturmamla beraber tek bir kelime dahi edemeden içeceklerimiz de gelmişti. Çağla bize Latte söylemişti. Hadi ama, ne berbat bir zevk! Kahveleri önümüze koyan garsona teşekkür ederek kahveden bir yudum aldım.\n\n“Eee, sen ne yaptın?” diye sordum Çağla’ya konu açmak niyetine. “Ne olsun, her zamanki gibi işimin peşinde koşturuyorum. Bu aralar da pek yoğunum zaten.” Son cümlesini söylerken burnunu kırıştırarak dudak büzmüştü.\n\nÇağla, burada işe başladığımdan beri tanıştığım ilk iş arkadaşımdı. Her ne kadar hareketlerini pek beğenmesem de ondan başka kimsem yoktu. Genelde şirkette tanıştığım herkes ya iş resmiyetinde yaklaşıyor, ya da yerime geçmeye çalışmak için arkadaşlık ediyordu. Ancak Çağla öyle bir insan değildi. Daha ilk günden sıcak yaklaşmış, bana sayısız kez yardımı olmuştu. Oda aynı şekilde yazılım departmanındaydı. Bazen bu yüzden iyi anlaştığımızı düşünüyordum.\n\nŞirkette sadece 2 Türk vardı. Bunlardan biri Çağla, diğeri de Kaan adında bir çalışandı. İş haricinde pek muhabbetimiz olmamıştı Kaan’la. Ama iyi birine benziyordu.\n\nÇağla, sevgilisi burada yaşadığı için Rusya’ya 19 yaşında taşınmıştı ve bildiğim kadarıyla da altı seneden fazladır da bu şirketteydi.\n\nÇağla ile geçen uzun sohbetimizin ardından çatlayan başıma ve gün boyu topuklu giymekten ağrıyan ayağıma daha fazla katlanamayarak Çağla ile vedalaştıktan sonra eve gitmek üzere şirketten ayrıldım.\n\nŞirketin otoparkına indiğimde fazlasıyla lüks olan arabamı aradı gözlerim. İyi bir şirkette, iyi bir yazılımcı olduğum için yüksek maaş alıyordum. Bu nedenle çoğu şeyim pahalı ve lükstü. Giydiğim marka kıyafetlerden, evime kadar.\n\nAnahtarla arabayı birkaç kez açıp kapatarak, farlardan çıkan ışıkla bulmaya çalıştım ama bir türlü göremedim. Fazlasıyla büyük ve kalabalık bir otoparktı. Bu sırada gözüme bir şey çarptı. Otoparkın çıkış kapısının önünde bir adam duruyordu ve eliyle bir yeri işaret ediyordu. Kafamı elinin işaret ettiği yere çevirdiğimde arabamı gördüm. Bana yardım ettiği için dönüp teşekkür edecekken adamın orada olmadığını fark etmemle araladığım ağızımı geri kapattım. Etrafıma bakındım ama yine de göremedim. Resmen kaşla göz arasında yok olmuştu!\n\n“Amaaan… Bana ne? Yardım ettiyse etti, arkasından teşekkür ederim olur biter.” diye söylenerek arabama ilerledim ve kapıyı açtım.\n\nKapıyı açmamla beraber ayağıma çarpan şeyle çığlık atarak geri sıçradım. Neye çarptığıma bakmak için kafamı eğdiğimde, eğdiğime pişman olmuştum. Kalbim saniyeler içerisinde yerinden çıkacak kadar hızlı atmaya başlamıştı. Gördüğüm şeyle şok olmuş bir şekilde yere bakıyordum şimdi. Korku, tüm hücrelerime yayılmış, tenim anında buz kesmişti.\n\nAyağıma çarpan şey, Çağla’nın nişanlısı Nikolai’nin kanlı cesediydi…`
+
+                content: `“Aklınıza takılan başka bir soru yoksa toplantı sona ermiştir. Katılım sağladığınız için teşekkür ederiz, başka projelerde yeniden buluşmak dileğiyle iyi günler dilerim…” Saatler süren toplantı nihayet sona erdiğinde, neredeyse çatlamakta olan başımla zoraki gülümsemeye çalışarak odadan çıkan çalışanlarla sırayla el sıkışıyor, teşekkür ediyordum. Sadece Çağla ve ben kalana kadar herkes odadan çıktığında, ayakta bile duramayacak kadar yorulduğumun yeni farkına varıyordum.
+
+Çağla arkamdan yaklaşarak omzuma dokundu. “Yorgun görünüyorsun... Kafeteryaya ineceğim işin yoksa bana eşlik eder misin? Hem sıcak bir şeyler içmek iyi gelir.” Çağla’nın bu teklifine karşılık başımı yorgunca aşağı yukarı sallayarak gülümsemeye çalıştım. Konuşacak halim bile yoktu!
+
+Beraber odadan çıktığımızda koridorun sonuna gelince durdum. “İstersen sen in, ben de eşyalarımı toplayıp geleyim. Bugün daha fazla çalışmayacağım, bir şeyler içtikten sonra şirketten çıkarım.” Çağla anlayışla başını salladı. “O sırada siparişleri veririm bende. Ne içiyorsun?” Pek de bir şey içesim yoktu aslında, teklifini kafamı dağıtıp dinlenmek için kabul etmiştim. “Sen ne alacaksan bana da ondan söyleyebilirsin.” Dedim hızlıca. Oda yeniden onaylarcasına başını sallayıp yanımdan ayrıldı.
+
+Bende kapının üzerinde ‘Yazılım Mühendisi Natalia Deesmi’ yazan odama girerek hızlıca eşyalarımı topladım ve kapıyı da kilitleyerek kafeteryaya inmek üzere asansöre ilerledim.
+
+Asansörün kapıları, büyük ve ihtişamlı şirketimizin en alt katına –yani kafeteryaya- açıldığında, uzun siyah topuklularımın üzerinde bir kuğu gibi süzülerek Çağla’nın oturduğu masaya ilerledim. Her ne kadar yorgun olsam da bundan asla ödün vermiyor, her seferinde mükemmel davranmaya çalışarak dikkatleri üzerime topluyordum. Bundan rahatsız olduğumda söylenemezdi. Küçüklüğümden beri hep en gözde olmayı isteyen, şımarık bir kızdım. Anne ve babamın tahammül edemezdi şımarıklığıma. Gerçi onlar bana da tahammül edemezdi. Hep nefret ederlerdi benden. Şimdi ise büyümüş, kendi ayaklarımın üzerinde durabilecek yaşa çoktan gelmiştim fakat karakterimden hiçbir şey kaybetmiş değildim. Hala gözde olmak beni mutlu ediyor, çocuk gibi şımarıyordum. Ama gün geçtikçe aile sevgisi görmemiş olmanın kırgınlığı da giderek büyüyordu içimde.
+
+Gözlerim Çağla ile buluştuğunda çoktan karşısındaki yerimi almıştım. Benim oturmamla beraber tek bir kelime dahi edemeden içeceklerimiz de gelmişti. Çağla bize Latte söylemişti. Hadi ama, ne berbat bir zevk! Kahveleri önümüze koyan garsona teşekkür ederek kahveden bir yudum aldım.
+
+“Eee, sen ne yaptın?” diye sordum Çağla’ya konu açmak niyetine. “Ne olsun, her zamanki gibi işimin peşinde koşturuyorum. Bu aralar da pek yoğunum zaten.” Son cümlesini söylerken burnunu kırıştırarak dudak büzmüştü.
+
+Çağla, burada işe başladığımdan beri tanıştığım ilk iş arkadaşımdı. Her ne kadar hareketlerini pek beğenmesem de ondan başka kimsem yoktu. Genelde şirkette tanıştığım herkes ya iş resmiyetinde yaklaşıyor, ya da yerime geçmeye çalışmak için arkadaşlık ediyordu. Ancak Çağla öyle bir insan değildi. Daha ilk günden sıcak yaklaşmış, bana sayısız kez yardımı olmuştu. Oda aynı şekilde yazılım departmanındaydı. Bazen bu yüzden iyi anlaştığımızı düşünüyordum.
+
+Şirkette sadece 2 Türk vardı. Bunlardan biri Çağla, diğeri de Kaan adında bir çalışandı. İş haricinde pek muhabbetimiz olmamıştı Kaan’la. Ama iyi birine benziyordu.
+
+Çağla, sevgilisi burada yaşadığı için Rusya’ya 19 yaşında taşınmıştı ve bildiğim kadarıyla da altı seneden fazladır da bu şirketteydi.
+
+Çağla ile geçen uzun sohbetimizin ardından çatlayan başıma ve gün boyu topuklu giymekten ağrıyan ayağıma daha fazla katlanamayarak Çağla ile vedalaştıktan sonra eve gitmek üzere şirketten ayrıldım.
+
+Şirketin otoparkına indiğimde fazlasıyla lüks olan arabamı aradı gözlerim. İyi bir şirkette, iyi bir yazılımcı olduğum için yüksek maaş alıyordum. Bu nedenle çoğu şeyim pahalı ve lükstü. Giydiğim marka kıyafetlerden, evime kadar.
+
+Anahtarla arabayı birkaç kez açıp kapatarak, farlardan çıkan ışıkla bulmaya çalıştım ama bir türlü göremedim. Fazlasıyla büyük ve kalabalık bir otoparktı. Bu sırada gözüme bir şey çarptı. Otoparkın çıkış kapısının önünde bir adam duruyordu ve eliyle bir yeri işaret ediyordu. Kafamı elinin işaret ettiği yere çevirdiğimde arabamı gördüm. Bana yardım ettiği için dönüp teşekkür edecekken adamın orada olmadığını fark etmemle araladığım ağızımı geri kapattım. Etrafıma bakındım ama yine de göremedim. Resmen kaşla göz arasında yok olmuştu!
+
+“Amaaan… Bana ne? Yardım ettiyse etti, arkasından teşekkür ederim olur biter.” diye söylenerek arabama ilerledim ve kapıyı açtım.
+
+Kapıyı açmamla beraber ayağıma çarpan şeyle çığlık atarak geri sıçradım. Neye çarptığıma bakmak için kafamı eğdiğimde, eğdiğime pişman olmuştum. Kalbim saniyeler içerisinde yerinden çıkacak kadar hızlı atmaya başlamıştı. Gördüğüm şeyle şok olmuş bir şekilde yere bakıyordum şimdi. Korku, tüm hücrelerime yayılmış, tenim anında buz kesmişti.
+
+Ayağıma çarpan şey, Çağla’nın nişanlısı Nikolai’nin kanlı cesediydi…`
+
             },
+
             {
                 title: "2. BÖLÜM: TANIŞMA",
-                content: `İhanet, her zaman sırtınızda taşıdığınız en yakın dostunuzun bıçak darbesiyle gelmez. En kusursuz ihaneti, sizi elleriyle büyütüp en yüksek kulenin tepesine oturtan hayatın kendisi hazırlar. Önce size her şeyi verir; lüksü, parayı, kontrolü, o sarsılmaz zekayı ve her şeyin zirvesinde olduğunuz o mağrur sarhoşluğu… Sizi gökyüzünün en tepesine kadar çıkarır ki, altınızdaki uçurumun derinliği canınızı daha çok yaksın. Hayat, en büyük darbesini vurmadan önce her zaman en tatlı ninnisini fısıldar kulağınıza: "Güvendesin... Mutlusun..."\n\nOysa bu, infazından önce bir kurbana sunulan son lüks akşam yemeğinden farksızdır.\n\nÇünkü hayat sizi göklere çıkarttığı an, aslında düşeceğiniz o beton zemini çoktan hazırlamıştır. Rüzgar tam tepede eserken yukarı bakarsınız, bulutlara dokunduğunuzu sanırsınız; ama altınızdaki toprak tek bir hamleyle kaydığında, o asil kuğu duruşunuz darmadağın olur. Ben, Natalia Deesmi. Bilgisayarımın ekranındaki kodlarla dünyayı yönettiğimi sanırken, kaderin benim için yazdığı o karanlık algoritmanın ilk satırını otoparkın dondurucu zemininde okumuştum.\n\nHayat bana en büyük ihanetini etmiş, beni o yüksek kuleden acımasızca aşağıya fırlatmıştı. Ve ben, yere düşerken bile yukarı bakmaya çalışıyordum.\n\nOtoparkın loş, sarı ışığı altında zaman bir anlığına durdu.\n\nTopuklu ayakkabımın ucu, o dondurucu soğukluktaki cansız tene değdiğinde, ciğerlerime dolan hava keskin bir buz kütlesine dönüştü. Çığlığım, beton duvarlara çarpıp yankılanırken, dudaklarımdan dökülen o ses bile bana ait değil gibiydi. Gözlerim yerde yatan, kanı otoparkın gri betonuna sızan cesede takılı kalmıştı. Kalbimin göğüs kafesimi parçalamak isteyen o delice ritmi, kulaklarımda bir uğultuya dönüştü.\n\nAdım atamadım. Kaçamadım. Pamraklarımı oynatacak gücü bile kendimde bulamadım. Bacaklarım, bedenimi daha fazla taşımaya dayanamadı ve olduğum yere çöktüm. Dudaklarımın arasından korku dolu bir hıçkırık kaçtı ve gözyaşlarımı daha fazla tutamadım. Gözlerimden usulca süzülen sıcak yaşlar yanaklarımı sırılsıklam etti.\n\nÇaresizdim. Korkuyordum. Bunu kim yapmıştı? Neden yapmıştı bilmiyordum ama öğrenmeliydim.\n\nÜstümdeki şoku bir nebze de olsa atlatıp elimin tersiyle gözyaşlarımı sildim. Kaldırdığım eli geri indirmedim, arabamın kaputuna bastırarak ayağa kalkmaya çalıştım. Bacaklarım bana bir kez daha ihanet etti ve yerden kalkamadım.\n\nBu sırada gözümü cesetten bir saniye bile ayırmamıştım.\n\nPerişan bir halde zorlukla, benimle beraber düşüp kana bulanan çantama uzandım. Telefonumu çıkardım ve polisi aramak üzere 112’yi tuşladım. Numaralara basarken parmaklarım titriyor, görüş açım giderek daralıyordu. Zorlukla numaraları girdiğimde henüz arama tuşuna bile basamadan telefonumun hızla elimden alınıp, yukarı doğru bir anda çekilince neye uğradığımı şaşırmıştım.\n\nBaşım delicesine dönüyor, korku tüm bedenime hücum ediyordu. Tam çığlık atacakken bir el ağzıma kapandı ve çığlığım boğazımda düğümlendi. Arkama dahi bakma fırsatı bulamadan bilincim bulandığında gördüğüm son şey Nikolai’nin cesedinden yayılan kan gölüne düşmeden hemen önce, siyahlar içindeki bir adamın belimden kavrayarak düşmekten beni kurtardığıydı. Görüşüm tamamen bulanıklaşırken duyduğum son ses ise şu olmuştu;\n\n“İlk tanışmamızı beğendin mi?” Sonrasında tüm sesler kesildi, zihnim karanlığa gömüldü. Öyle derin bir uykuya daldım ki, beynimdeki sesleri bile duyamaz hale geldim.`
+
+                content: `İhanet, her zaman sırtınızda taşıdığınız en yakın dostunuzun bıçak darbesiyle gelmez. En kusursuz ihaneti, sizi elleriyle büyütüp en yüksek kulenin tepesine oturtan hayatın kendisi hazırlar. Önce size her şeyi verir; lüksü, parayı, kontrolü, o sarsılmaz zekayı ve her şeyin zirvesinde olduğunuz o mağrur sarhoşluğu… Sizi gökyüzünün en tepesine kadar çıkarır ki, altınızdaki uçurumun derinliği canınızı daha çok yaksın. Hayat, en büyük darbesini vurmadan önce her zaman en tatlı ninnisini fısıldar kulağınıza: "Güvendesin... Mutlusun..."
+
+Oysa bu, infazından önce bir kurbana sunulan son lüks akşam yemeğinden farksızdır.
+
+Çünkü hayat sizi göklere çıkarttığı an, aslında düşeceğiniz o beton zemini çoktan hazırlamıştır. Rüzgar tam tepede eserken yukarı bakarsınız, bulutlara dokunduğunuzu sanırsınız; ama altınızdaki toprak tek bir hamleyle kaydığında, o asil kuğu duruşunuz darmadağın olur. Ben, Natalia Deesmi. Bilgisayarımın ekranındaki kodlarla dünyayı yönettiğimi sanırken, kaderin benim için yazdığı o karanlık algoritmanın ilk satırını otoparkın dondurucu zemininde okumuştum.
+
+Hayat bana en büyük ihanetini etmiş, beni o yüksek kuleden acımasızca aşağıya fırlatmıştı. Ve ben, yere düşerken bile yukarı bakmaya çalışıyordum.
+
+Otoparkın loş, sarı ışığı altında zaman bir anlığına durdu.
+
+Topuklu ayakkabımın ucu, o dondurucu soğukluktaki cansız tene değdiğinde, ciğerlerime dolan hava keskin bir buz kütlesine dönüştü. Çığlığım, beton duvarlara çarpıp yankılanırken, dudaklarımdan dökülen o ses bile bana ait değil gibiydi. Gözlerim yerde yatan, kanı otoparkın gri betonuna sızan cesede takılı kalmıştı. Kalbimin göğüs kafesimi parçalamak isteyen o delice ritmi, kulaklarımda bir uğultuya dönüştü.
+
+Adım atamadım. Kaçamadım. Pamraklarımı oynatacak gücü bile kendimde bulamadım. Bacaklarım, bedenimi daha fazla taşımaya dayanamadı ve olduğum yere çöktüm. Dudaklarımın arasından korku dolu bir hıçkırık kaçtı ve gözyaşlarımı daha fazla tutamadım. Gözlerimden usulca süzülen sıcak yaşlar yanaklarımı sırılsıklam etti.
+
+Çaresizdim. Korkuyordum. Bunu kim yapmıştı? Neden yapmıştı bilmiyordum ama öğrenmeliydim.
+
+Üstümdeki şoku bir nebze de olsa atlatıp elimin tersiyle gözyaşlarımı sildim. Kaldırdığım eli geri indirmedim, arabamın kaputuna bastırarak ayağa kalkmaya çalıştım. Bacaklarım bana bir kez daha ihanet etti ve yerden kalkamadım.
+
+Bu sırada gözümü cesetten bir saniye bile ayırmamıştım.
+
+Perişan bir halde zorlukla, benimle beraber düşüp kana bulanan çantama uzandım. Telefonumu çıkardım ve polisi aramak üzere 112’yi tuşladım. Numaralara basarken parmaklarım titriyor, görüş açım giderek daralıyordu. Zorlukla numaraları girdiğimde henüz arama tuşuna bile basamadan telefonumun hızla elimden alınıp, yukarı doğru bir anda çekilince neye uğradığımı şaşırmıştım.
+
+Başım delicesine dönüyor, korku tüm bedenime hücum ediyordu. Tam çığlık atacakken bir el ağzıma kapandı ve çığlığım boğazımda düğümlendi. Arkama dahi bakma fırsatı bulamadan bilincim bulandığında gördüğüm son şey Nikolai’nin cesedinden yayılan kan gölüne düşmeden hemen önce, siyahlar içindeki bir adamın belimden kavrayarak düşmekten beni kurtardığıydı. Görüşüm tamamen bulanıklaşırken duyduğum son ses ise şu olmuştu;
+
+“İlk tanışmamızı beğendin mi?” Sonrasında tüm sesler kesildi, zihnim karanlığa gömüldü. Öyle derin bir uykuya daldım ki, beynimdeki sesleri bile duyamaz hale geldim.`
+
             },
+
             {
                 title: "3. BÖLÜM: MAVİ",
-                content: `Bir uçurumun başındaydım. Üzerimde beyaz, saten bir elbise vardı. Saçlarım kırmızı bir kurdeleyle özenle toplanmıştı. Uçurumun baktığı okyanus kadar güzel görünüyordum. Sonra bir rüzgar esti. Öyle bir rüzgardı ki bu, tenimi okşayıp geçtiğini hissettim. Beni alsın götürsün istedim ve yavaşça kendimi rüzgarın kollarına bıraktım. Rüzgar taşıyamadı beni, alıp uzaklara sürükleyemedi. Öylece uçurumdan aşağı düştüm. Tenim soğuk su ile buluşana kadar uçtuğumu sanıyordum. Önce saçlarım, sonra tüm bedenim su ile buluştuğunda ürperdiğimi hissettim. Sonra bir anda hava karardı, bir fırtına çıktı. Dalgalar hırçınlaştı. Hepsi benimle savaşmak için hazırdı sanki. Uçurumdan baktığımda etkilendiğim okyanus, şimdi fazlasıyla ölümcül geliyordu. Bu sırada büyük bir dalga üzerimden geçti ve ben boğularak can verdim.\n\nNihayet bu korkunç kabustan uyandığımda nefes nefese olduğumu hissediyordum. Yine de gözlerimi açmadım, açamadım. Etraf sessizdi ve nerede olduğuma dair hiçbir fikrim yoktu. Bayılmadan önce neler yaşadığımı düşünmeye çalıştım ve hatırladığımda aklıma gelen görüntüyle kusacak gibi hissettim. Yüzümü buruşturmamla başıma saplanan ağrı, yüzümü daha da buruşturmama neden oldu.\n\n“Uyanmışsın.” Dedi yanı başımdan gelen bir ses. Bu sesin sahibini tanımıyordum.\n\nGözlerimi yavaşça araladım. İlk başta her şey puslu gözüküyordu. Net görebilmek için gözlerimi kırpıştırdım ve nihayet sesin sahibini görebildim.\n\n“Sen kimsin?” dedim kısık ve tiz çıkan sesimle. Sanırım çığlıklarım yüzünden sesim kısılmıştı çünkü boğazım fena ağrıyordu.\n\n“Oysaki ben seni ilk görüşümde tanıdım Natalia. Beni nasıl tanıyamazsın? Çok kırıldım şu an.” Dedi alay ederek.\n\nAdımı biliyordu. Nereden biliyordu? Ben onu tanımadığıma emindim.\n\nYattığım yerden doğrulmak istedim fakat kolumdan yatağa zincirlendiğimi yeni fark ediyordum. Kaşlarımı çattım.\n\n“Kimsin dedim!” Bu kez sesim yüksek çıkmıştı. Oda buna karşılık histerik bir şekilde kahkaha attı.“Aslında adımı çok iyi biliyorsun Natalia, unutmuş olmalısın. Hatırlayana kadar bana isim takabilirsin. Beni görenler genelde şeytan der ve bu onların beni son görüşleri olur. Sen ne demek istersin?”\n\nBunu söylerken yüzüme doğru eğilmişti ve ben gözlerini tanıdığımı hissettiğimi fark etmiş, ama çıkaramamıştım. Koyu mavi gözleri vardı. Gözlerinin ardında ise boğulduğum o okyanus vardı. Fırtınalar kopuyor, rüzgar kasvetle esiyordu. Gözleri bir okyanusu andırıyordu. Ona Mavi diyecektim. Tabii kendi içimde. “Ruh hastası.” Diye söylendim sinirle. Yeniden kahkaha attı. “Bu ismi beğendim!” diye resmen neşeyle şakıdı desem yalan olmazdı.\n\n“Beni neden getirdin buraya?” diye sordum bu kez de. “Çok soru soruyorsun.” Göz devirdim. “Sen de hiç cevap vermiyorsun!” Sormak istediğim daha çok soru vardı ama cevap vermeyeceğini anlayınca susup arkamı döndüm. Oda bir şey demedi ve sessizce başımda bekledi.\n\nSonunda pes edip ciğerlerime doldurduğum nefesi sesli bir şekilde dışa vererek sordum. “Başımda Azrail gibi dikilecek misin böyle sabaha kadar?” Kurduğum cümleye gülmekle gülmemek arasında kalmıştı ki içeri birinin girmesiyle anında ciddileşti.\n\n“Bakıyorum da küçük hanım uyanmış!” dedi içeri giren neşeyle. “Biriniz bitmeden öbürünüz başlıyor, harika!” diye söylendim odaya giren kişiye hitaben. “Deme öyle sarışın kız, üzülürüm. Hem ben sizi eğlendirmeye geldim!”\n\n“Off, bari sen cevapla sorularımı.” Diye ağlamaklı bir tonda konuştum. Kapıdaki adam tek adımda yanıma ulaştı ve Mavi’nin omzuna elini koydu. “Sen benim sarışınıma niye cevap vermiyorsun lan?” dedi şakacı bir tavırla. Mavi de omzundaki elini ittirdi. “Şimdi sırası değil, Kutay.”\n\nBöylelikle adını da öğrenmiş oldum. Mavi sinirle odayı terk ederken bizi Kutay’la tek bıraktı.\n\n“Sen bana sor ben anlatırım sarışın.” Bir süre gözlerine baktım. Mavi’nin aksine, Kutay’ın gözleri kahverengiydi. “Bir, bana sarışın deme. İki, şu zincirleri çöz.” Diyerek emir verirken gözlerimle de zincirleri işaret ettim. “Olmaz sarışın. İki emrine de hayır diyorum. Zincirleri çözersem Gece beni öldürür!”\n\nKaşlarımı çattım. “Gece kim?” Sorumla ikileme düştü. “Az önce odadan çıkan kişi. Adı Gece değil, ama biz ona Gece diyoruz.” Gece. Adını Mavi koyduğum kişiye onlar Gece diyordu. “Bundan sonra Mavi deyin.” Dedim hızlıca. “Mavi mi?” Kafamı onaylarcasına salladım. “Evet, ben koydum. Şimdi zincirleri çöz. Kaçmam merak etme, benim 2 katımsın zaten kaçsam da yakalarsın.” Diyerek iyi bir bahane sundum.\n\nGerçekten de iri ve güçlü duruyordu. Oda buna ikna olmuş olacak ki zincirlerimi çözmeye başladı. Mavi olsa asla çözmezdi. Kutay’ın odaya girip Mavi’yi kaçırması iyi olmuştu. Zincirlerden tamamen kurtulduğumda yatakta doğruldum ve dizlerimi aşağı sarkıttım. Odayı inceleme fırsatını yeni buluyordum. Hapishane koğuşlarından farksız gözüküyordu. Duvarlar, ve hatta zeminde dahil griydi. Karanlık bir odaydı.\n\nBen odayı incelerken Kutay, kenardaki sandalyelerden birini tam karşıma çekerek oturmuştu.\n\n“Siz kimsiniz ve ben neredeyim?” diye sordum sonunda. Oyalamadı. Hızlıca cevap verdi. “LV örgütünün 7. Üyesi Kutay Vural ben.” dedi; “LV tanıdık geldi mi?” diye de ekledi.\n\nLV Rusya’nın en büyük örgütlerinden biriydi. Her türlü pislik ve tehlikeye dahil olmuşlardı neredeyse. Yazılım mühendisi olarak çalıştığım şirketimde de birçok kez örgütün bilgilerine sızmam istenmişti ve ben de bunu başarıyla yapmıştım. Bu nedenle örgüt hakkında pek çok bilgiye de sahiptim.\n\nBen… Sırf bu yüzden mi kaçırılmıştım?\n\nŞirketten çıkmadan önce yaşananlar zihnimde yeniden canlandığında öyle bir midem bulandı ki yere doğru eğilerek öğürmek zorunda kalındım.\n\n“Bu kadar mı iğreniyorsun bizden sarışın? Başımı iki yana salladım. “Sizden değil…” dedim. “Yani sizden de iğreniyorum da otoparkta olanlar aklıma geldiği için…” diye de ekledim ve cümlenin devamı gelmedi. Kutay başını salladı. Dehşetle yüzüne baktım. O ise fazlasıyla rahattı. Biliyorum, otoparkta yaşananları, Nikolai’nin öldürüldüğünü biliordu. Kalbim bir kez daha bedenimi zorlayıp ritmini yükseltmeye devam ediyordu. Yanılıyordum, Kutay’da Mavi’den farksızdı. İkisi de birer katildi.\n\n“Sen… Olanları biliyor musun?” diye sordum. “Bu örgütte yapılan herşeyi herkes bilir.” Dedi. Korkuyla yüzüne baktım. “Onu… Onu siz öldürdünüz!” dedim çığlık atarcasına bir tonda. Kutay kafasını öne eğdi.\n\nNasıl masum birinin ölümüne böyle sessiz kalabiliyordu?\n\n“Sakin ol sarışın.” Dedi korumacı bir tavırla. “Katilsin sen katil!” Diyerek ağlamaya başladım. Ağlamam gittikçe şiddetleniyordu ve Kutay sadece şaşkınca suratıma bakıyordu. “Bakma bana öyle.” Dedim uyarır gibi bir tonda. “Sen biraz sakinleş sonra konuşalım.” Diyerek odadan çıktı ve ben bir kez daha o okyanusta boğuldum.\n\nÜstelik bu kez uçurumun aşağısındaki okyanus değildi bu. Mavi’nin gözlerindeki okyanusta boğulmuştum.\n\nAğlamam gittikçe şiddetleniyor, ağzımın arasından kaçan hıçkırıklar soluk duvarlara çarpıp geri dönüyordu. Nefes almakta zorlanıyordum, ciğerlerim adeta kızgın bir demirle bağlanmış gibi yanıyordu.\n\nBu sırada bir gürültü koptu. Bu ses beni susturmaya yetmişti. Saniyeler sonra bir ses daha, ve bir ses daha. Dikkat kesilerek sesi dinledim. Ateş sesiydi ve ardı kesilmiyordu. Sesler giderek o kadar yükseldi ve arttı ki zihnimin içinde yankılanmaya başlamıştı.\n\nBeni kurtarmaya mı gelmişlerdi? Gelmezlerdi, gelemezlerdi. Yıllardır aranan ve sır gibi saklanmış bir örgütü şimdi bulacak değillerdi.\n\nAteş sesleri giderek yakınlaştı, sesler yakınlaştıkça kalbim daha hızlı attı. Ölecektim, ölmek istemiyordum ama ölecek gibi hissediyordum. Başım dönüyor, zihnim susmiyordu. Ateş sesleri beynimi esir almıştı. Daha fazla duymamak için ellerimi kulaklarına bastırırken gözlerimden akmak için hazırda bekleyen yaşlarıma da engel olamadım. Yatağa bağlı olduğumdan da ne kaçabiliyor, ne de saklanabiliyordu. Tamamen savunmasızdım.\n\nBu sırada silah seslerinden daha büyük bir gürültü koptu. Kapım kırılarak açıldı ve içeri silahlı 3 adam girdi. Gözlerim korkuyla irileşti ve boğazımdan çıkan çığlığa engel olamadım. En tiz sesimle avazım çıktığı kadar çığlık attım. Adamlardan çevik bir hareketle elini ağızıma bastırarak kapattığında nefes alamadım ve görüşümün bulanıklaştığını hissettim. Bir yandan hala bağırmaya çalışıyordum, fakat zaten tükenen nefesimi daha da tüketmekten başka bir şeye yaramıyordu. Görüşüm bulanıklaşırken duyduğum son ses odada yankılanan silah sesi oldu. Mermi, namludan fırlayıp gözlerimin önünden geçti ve ben nereye isabet ettiğini göremeden bilincimi kaybettim.`
+
+                content: `Bir uçurumun başındaydım. Üzerimde beyaz, saten bir elbise vardı. Saçlarım kırmızı bir kurdeleyle özenle toplanmıştı. Uçurumun baktığı okyanus kadar güzel görünüyordum. Sonra bir rüzgar esti. Öyle bir rüzgardı ki bu, tenimi okşayıp geçtiğini hissettim. Beni alsın götürsün istedim ve yavaşça kendimi rüzgarın kollarına bıraktım. Rüzgar taşıyamadı beni, alıp uzaklara sürükleyemedi. Öylece uçurumdan aşağı düştüm. Tenim soğuk su ile buluşana kadar uçtuğumu sanıyordum. Önce saçlarım, sonra tüm bedenim su ile buluştuğunda ürperdiğimi hissettim. Sonra bir anda hava karardı, bir fırtına çıktı. Dalgalar hırçınlaştı. Hepsi benimle savaşmak için hazırdı sanki. Uçurumdan baktığımda etkilendiğim okyanus, şimdi fazlasıyla ölümcül geliyordu. Bu sırada büyük bir dalga üzerimden geçti ve ben boğularak can verdim.
+
+Nihayet bu korkunç kabustan uyandığımda nefes nefese olduğumu hissediyordum. Yine de gözlerimi açmadım, açamadım. Etraf sessizdi ve nerede olduğuma dair hiçbir fikrim yoktu. Bayılmadan önce neler yaşadığımı düşünmeye çalıştım ve hatırladığımda aklıma gelen görüntüyle kusacak gibi hissettim. Yüzümü buruşturmamla başıma saplanan ağrı, yüzümü daha da buruşturmama neden oldu.
+
+“Uyanmışsın.” Dedi yanı başımdan gelen bir ses. Bu sesin sahibini tanımıyordum.
+
+Gözlerimi yavaşça araladım. İlk başta her şey puslu gözüküyordu. Net görebilmek için gözlerimi kırpıştırdım ve nihayet sesin sahibini görebildim.
+
+“Sen kimsin?” dedim kısık ve tiz çıkan sesimle. Sanırım çığlıklarım yüzünden sesim kısılmıştı çünkü boğazım fena ağrıyordu.
+
+“Oysaki ben seni ilk görüşümde tanıdım Natalia. Beni nasıl tanıyamazsın? Çok kırıldım şu an.” Dedi alay ederek.
+
+Adımı biliyordu. Nereden biliyordu? Ben onu tanımadığıma emindim.
+
+Yattığım yerden doğrulmak istedim fakat kolumdan yatağa zincirlendiğimi yeni fark ediyordum. Kaşlarımı çattım.
+
+“Kimsin dedim!” Bu kez sesim yüksek çıkmıştı. Oda buna karşılık histerik bir şekilde kahkaha attı.“Aslında adımı çok iyi biliyorsun Natalia, unutmuş olmalısın. Hatırlayana kadar bana isim takabilirsin. Beni görenler genelde şeytan der ve bu onların beni son görüşleri olur. Sen ne demek istersin?”
+
+Bunu söylerken yüzüme doğru eğilmişti ve ben gözlerini tanıdığımı hissettiğimi fark etmiş, ama çıkaramamıştım. Koyu mavi gözleri vardı. Gözlerinin ardında ise boğulduğum o okyanus vardı. Fırtınalar kopuyor, rüzgar kasvetle esiyordu. Gözleri bir okyanusu andırıyordu. Ona Mavi diyecektim. Tabii kendi içimde. “Ruh hastası.” Diye söylendim sinirle. Yeniden kahkaha attı. “Bu ismi beğendim!” diye resmen neşeyle şakıdı desem yalan olmazdı.
+
+“Beni neden getirdin buraya?” diye sordum bu kez de. “Çok soru soruyorsun.” Göz devirdim. “Sen de hiç cevap vermiyorsun!” Sormak istediğim daha çok soru vardı ama cevap vermeyeceğini anlayınca susup arkamı döndüm. Oda bir şey demedi ve sessizce başımda bekledi.
+
+Sonunda pes edip ciğerlerime doldurduğum nefesi sesli bir şekilde dışa vererek sordum. “Başımda Azrail gibi dikilecek misin böyle sabaha kadar?” Kurduğum cümleye gülmekle gülmemek arasında kalmıştı ki içeri birinin girmesiyle anında ciddileşti.
+
+“Bakıyorum da küçük hanım uyanmış!” dedi içeri giren neşeyle. “Biriniz bitmeden öbürünüz başlıyor, harika!” diye söylendim odaya giren kişiye hitaben. “Deme öyle sarışın kız, üzülürüm. Hem ben sizi eğlendirmeye geldim!”
+
+“Off, bari sen cevapla sorularımı.” Diye ağlamaklı bir tonda konuştum. Kapıdaki adam tek adımda yanıma ulaştı ve Mavi’nin omzuna elini koydu. “Sen benim sarışınıma niye cevap vermiyorsun lan?” dedi şakacı bir tavırla. Mavi de omzundaki elini ittirdi. “Şimdi sırası değil, Kutay.”
+
+Böylelikle adını da öğrenmiş oldum. Mavi sinirle odayı terk ederken bizi Kutay’la tek bıraktı.
+
+“Sen bana sor ben anlatırım sarışın.” Bir süre gözlerine baktım. Mavi’nin aksine, Kutay’ın gözleri kahverengiydi. “Bir, bana sarışın deme. İki, şu zincirleri çöz.” Diyerek emir verirken gözlerimle de zincirleri işaret ettim. “Olmaz sarışın. İki emrine de hayır diyorum. Zincirleri çözersem Gece beni öldür!”
+
+Kaşlarımı çattım. “Gece kim?” Sorumla ikileme düştü. “Az önce odadan çıkan kişi. Adı Gece değil, ama biz ona Gece diyoruz.” Gece. Adını Mavi koyduğum kişiye onlar Gece diyordu. “Bundan sonra Mavi deyin.” Dedim hızlıca. “Mavi mi?” Kafamı onaylarcasına salladım. “Evet, ben koydum. Şimdi zincirleri çöz. Kaçmam merak etme, benim 2 katımsın zaten kaçsam da yakalarsın.” Diyerek iyi bir bahane sundum.
+
+Gerçekten de iri ve güçlü duruyordu. Oda buna ikna olmuş olacak ki zincirlerimi çözmeye başladı. Mavi olsa asla çözmezdi. Kutay’ın odaya girip Mavi’yi kaçırması iyi olmuştu. Zincirlerden tamamen kurtulduğumda yatakta doğruldum ve dizlerimi aşağı sarkıttım. Odayı inceleme fırsatını yeni buluyordum. Hapishane koğuşlarından farksız gözüküyordu. Duvarlar, ve hatta zeminde dahil griydi. Karanlık bir odaydı.
+
+Ben odayı incelerken Kutay, kenardaki sandalyelerden birini tam karşıma çekerek oturmuştu.
+
+“Siz kimsiniz ve ben neredeyim?” diye sordum sonunda. Oyalamadı. Hızlıca cevap verdi. “LV örgütünün 7. Üyesi Kutay Vural ben.” dedi; “LV tanıdık geldi mi?” diye de ekledi.
+
+LV Rusya’nın en büyük örgütlerinden biriydi. Her türlü pislik ve tehlikeye dahil olmuşlardı neredeyse. Yazılım mühendisi olarak çalıştığım şirketimde de birçok kez örgütün bilgilerine sızmam istenmişti ve ben de bunu başarıyla yapmıştım. Bu nedenle örgüt hakkında pek çok bilgiye de sahiptim.
+
+Ben… Sırf bu yüzden mi kaçırılmıştım?
+
+Şirketten çıkmadan önce yaşananlar zihnimde yeniden canlandığında öyle bir midem bulandı ki yere doğru eğilerek öğürmek zorunda kaldım.
+
+“Bu kadar mı iğreniyorsun bizden sarışın? Başımı iki yana salladım. “Sizden değil…” dedim. “Yani sizden de iğreniyorum da otoparkta olanlar aklıma geldiği için…” diye de ekledim ve cümlenin devamı gelmedi. Kutay başını salladı. Dehşetle yüzüne baktım. O ise fazlasıyla rahattı. Biliyorum, otoparkta yaşananları, Nikolai’nin öldürüldüğünü biliordu. Kalbim bir kez daha bedenimi zorlayıp ritmini yükseltmeye devam ediyordu. Yanılıyordum, Kutay’da Mavi’den farksızdı. İkisi de birer katildi.
+
+“Sen… Olanları biliyor musun?” diye sordum. “Bu örgütte yapılan herşeyi herkes bilir.” Dedi. Korkuyla yüzüne baktım. “Onu… Onu siz öldürdünüz!” dedim çığlık atarcasına bir tonda. Kutay kafasını öne eğdi.
+
+Nasıl masum birinin ölümüne böyle sessiz kalabiliyordu?
+
+“Sakin ol sarışın.” Dedi korumacı bir tavırla. “Katilsin sen katil!” Diyerek ağlamaya başladım. Ağlamam gittikçe şiddetleniyordu ve Kutay sadece şaşkınca suratıma bakıyordu. “Bakma bana öyle.” Dedim uyarır gibi bir tonda. “Sen biraz sakinleş sonra konuşalım.” Diyerek odadan çıktı ve ben bir kez daha o okyanusta boğuldum.
+
+Üstelik bu kez uçurumun aşağısındaki okyanus değildi bu. Mavi’nin gözlerindeki okyanusta boğulmuştum.
+
+Ağlamam gittikçe şiddetleniyor, ağzımın arasından kaçan hıçkırıklar soluk duvarlara çarpıp geri dönüyordu. Nefes almakta zorlanıyordum, ciğerlerim adeta kızgın bir demirle bağlanmış gibi yanıyordu.
+
+Bu sırada bir gürültü koptu. Bu ses beni susturmaya yetmişti. Saniyeler sonra bir ses daha, ve bir ses daha. Dikkat kesilerek sesi dinledim. Ateş sesiydi ve ardı kesilmiyordu. Sesler giderek o kadar yükseldi ve arttı ki zihnimin içinde yankılanmaya başlamıştı.
+
+Beni kurtarmaya mı gelmişlerdi? Gelmezlerdi, gelemezlerdi. Yıllardır aranan ve sır gibi saklanmış bir örgütü şimdi bulacak değillerdi.
+
+Ateş sesleri giderek yakınlaştı, sesler yakınlaştıkça kalbim daha hızlı attı. Ölecektim, ölmek istemiyordum ama ölecek gibi hissediyordum. Başım dönüyor, zihnim susmiyordu. Ateş sesleri beynimi esir almıştı. Daha fazla duymamak için ellerimi kulaklarına bastırırken gözlerimden akmak için hazırda bekleyen yaşlarıma da engel olamadım. Yatağa bağlı olduğumdan da ne kaçabiliyor, ne de saklanabiliyordu. Tamamen savunmasızdım.
+
+Bu sırada silah seslerinden daha büyük bir gürültü koptu. Kapım kırılarak açıldı ve içeri silahlı 3 adam girdi. Gözlerim korkuyla irileşti ve boğazımdan çıkan çığlığa engel olamadım. En tiz sesimle avazım çıktığı kadar çığlık attım. Adamlardan çevik bir hareketle elini ağızıma bastırarak kapattığında nefes alamadım ve görüşümün bulanıklaştığını hissettim. Bir yandan hala bağırmaya çalışıyordum, fakat zaten tükenen nefesimi daha da tüketmekten başka bir şeye yaramıyordu. Görüşüm bulanıklaşırken duyduğum son ses odada yankılanan silah sesi oldu. Mermi, namludan fırlayıp gözlerimin önünden geçti ve ben nereye isabet ettiğini göremeden bilincimi kaybettim.`
+
             },
+
             {
                 title: "4. BÖLÜM: BİLMEMEN DAHA İYİ",
-                content: `“Kaç kişilerdi bunlar?”\n“Zordu, ama yaptık.”\n“Nasıl bir travma yaşattınız kızcağıza? Uyanmadı hala baksanıza.”\n\nBenden bahsettiklerini anlayarak gözlerimi araladım. Her şey puslu ve bulanık görünüyordu, bu yüzden yüzlerini seçemiyordum. Ellerimle gözlerimi ovuşturup kafamı omzumdan kaldırdım.\n\n“Senin konuşmanı bekliyormuş, baksana uyandı.”\n\nBu kez konuşan bir kızdı ve sesi çok tanıdık geliyordu.\n\n“Uyandı uyanmasına da kendine gelmesi uzun sürecek gibi.”\n\nEvet evet, bu sesin sahibini kesinlikle tanıyordum. Görüşüm daha da netleştiğinde sesin sahibine baktım ve siyah saçlarından anında tanıdım.\n\n“Çağla?”\n\n“Ayyy görüyor musunuz ilk beni tanıdı!” dedi büyük bir sevinçle.\n\n“Çağla! Cidden sen misin…?” diye sordum. Yaşadıklarımdan sonra kendi gözüme bile güvenemez hale gelmiştim resmen.\n\n“Benim aşkım, benim. Mor atlı prensesin kurtarmaya geldi seni.” Diyerek eliyle kahramanmışçasına belirsiz hareketler yaptı.\n\n“Beyaz atlı prens değil miydi o Mor atlı prenses nereden çıktı?” dedi hala kim olduğunu anlayamadığım kişi.\n\n“Sus sen mor o bir kere!” diye yalandan çıkıştı Çağla.\n\n“Saçma sapan şakalarınızı bir kenara bırakıp beni aydınlatmaya ne dersiniz?” dedim halsizce, çatallı ve kısık çıkan sesimle.\n\n“Doğru sana anlatmayı unuttum! Şimdi önce şuradan başlayayım aşkım kaçırıldın.” Dedi Çağla. Cümlenin devamını getirmesini bekledim ama sessizliğini korumaya devam etti.\n\n“Çağla ben hafızamı kaybetmedim orasını biliyorum.” Dedim baygın gözlerle bakarak.\n\n“Ha sen devamını istiyorsun…” dedi ve yine sustu.\n\n“Çağla!” diye bağırdığımda gülmeye başlamıştı fakat sanırım boğazımın acısından haberi yoktu.\n\n“Neyse anlatayım. Kimin kaçırdığını ve neden kaçırdığını henüz bilmiyoruz. Başına bir şey geldiğini otoparkta 1 gündür duran araban, ofise gelmeyişin ve telefonlarını açmayışınla anladık. Zaten şirketimizin güvenlik ekipleri olduğunu biliyorsun. Onlara haber verdik ve konumunu bulduk. Ayrıca bu örgütü bir süredir araştırdığını biliyorduk. Tüm güvenlik ekibiyle baskın düzenledik ve yerini bulup seni oradan çıkardık. Ardından ekipler savaşmaya devam ederken de biz buraya kaçtık. Yerimizi bulmamaları için bu 40 metrekareden bile küçük evde birkaç gün idare etmemiz gerekiyor. Şimdi sen bize hatırladıklarını anlat Natalia.”\n\nDuyduklarımı sindirmeye ve anlamaya çalışırken odayı inceliyordum. Gerçekten çok küçüktü. 4 kişi bir odaya zor sığıyorduk. Cidden, diğer 2 kişi kimdi? Onları hala tanıyamamıştım.\n\n“Önce bir sorum var… Yanımızdaki 2 kişi kim?”\n\nÇağla güldü. “Ben size tanımaz demiştim! İddiayı ben kazandım.” Dedi yine neşeli bir tonda. “Solumdaki Kaan. Tanıyorsun zaten. Sağımdaki ise Milan. Örgüt liderinin öz oğlu olduğunu ve babasıyla düşman olup bize yardım etmek istediğini iddia ediyor.\n\n“İddia etmiyorum öyle.” Dedi Milan uyandığımdan beri sesini sadece 2. Kez duyuyordum.\n\n“Sana güvenmem için bir sebep söyle.” Dedim duygusuzca bir tonda.\n\n“Sebebim var ama öğrenmek istemezsin.” Dedi yanıma otururken.\n\n“Niyeymiş o?” Sorumla beraber bir süre gözlerimin içine baktı.\n\n“Gözlerinden belli oluyor çok şey yaşadığın. Daha fazlasını yaşamamak için şu an bilmemen daha iyi.” Dedi uyarırcasına ukala bir tonda ve yanımdan kalktı. Arkasından göz devirmeden duramadım.`
-            },
-            {   title: "5. BÖLÜM: GERÇEKLER VE GİZLENİŞLER",
-                content: `Bazı gerçekleri öğrenmek, gerçeğin kendisinden çok daha fazla acıtır insanın canını. Yıllarca sessiz bir kabullenişle, kendinizi kandırarak inşa ettiğiniz o korunaklı hayat, tek bir hakikatle yerle bir olur; geriye ise telafisi imkansız bir enkaz kalır. İşte bu yüzden, ruhumu bu yıkımdan korumak adına bilmemeyi, görmezden gelmeyi bir sığınak seçerim bazen. Ne var ki, kaçış ne kadar uzun sürerse sürsün, hayatın sarsılmaz bir kuralı vardır: Gerçekler unutulmaz, sadece uyur; ve siz ne kadar uzağa giderseniz gidin, o inatçı gölge en zayıf anınızda gelip sırtınıza yapışır.
-Saatler süren konuşmamızın ardından herkes bir kenara sızıp uyuya kalmıştı. Ben onlara yaşadıklarımı anlatmış, onlar ise Milan haricinde her defasında şaşırmışlardı. Tabii Nikolai’nin öldüğünü onlara söylememiştim. Yoksa Çağla’nın halini düşünmek bile istemiyorum.
-“Milan… Uyan” dedim fısıltıyla. Onunla konuşmamız gerekiyordu. Kimdi, ne biliyordu bana anlatacaktı. 
-İkinci kez seslenmeme gerek kalmadan gözlerini açtı. 
-“Benimle mutfağa gelir misin?” sözümü ikiletmeden ayağı kalktı. Ne konuşacağımızı tahmin ettiğine emindim.
-İkimizde mutfağa girince kapıyı sessizce kapattım. Işığı açma gereği duymamıştım.
-“Ne soracağımı biliyorsun. Kimsin sen Milan?”
-“Öğrenmeye hazır olduğuna emin misin Natalia?”
-Cevap vermedim fakat gözlerimi hazır olduğumu belirtircesine kıstım.
-“Tamam, anlatayım.” Tabureyi çekip üzerine oturdu ve eliyle benimde oturmamı gösterdi. Bende hızlıca karşısına geçtim.
-“Üvey babanı hatırlıyor musun Natalia?” sorduğu soru karşısında afalladım.
-“Ne? Sen nereden biliyorsun babamın üvey olduğunu?”
-“Böyle sürekli sorgulayıp sorularıma cevap vermeyeceksen gidip uyuyacağım seni çekemem soruma soruyla cevap verme.” 
-Burnumdan bıkkınca nefes verip göz devirdim. Gerçi o karanlıkta bunu görüp görmediğinden emin değildim.
-“Tamam. Ne yalan söyleyeyim hayal meyal hatırlıyorum sadece.”
-Kafasını onaylarcasına salladı.
-“Peki ya adını hatırlıyor musun?”
-Bir süre düşündüm.
-“Vik… Viktur… Viktorovna Deesmi!”
-Babamın adını söylemek bile tuhaf hissettiriyordu bana. 
-“Hatırlıyorsun.” Diyerek gülümsedi ve ekledi. “Kaçırıldığında örgütten birileriyle konuştun mu?”
-Konuşmaz mıyım Milan’cığım, konuştuğum iki herifte birbirinden beterdi!
-“Konuştum, Kutay ve Gece isimli iki kişiydi. Kutay örgütün yedinci üyesiymiş diğer dilsizi bilmiyorum beni sinir etmek dışında pek bir şey yapmadı. Ayrıca bunun babamla ilgisi ne?”
-Bir süre duraksadı. “Onu adı Gece değil.”
-“Onu anladık zaten tanıştığımda isimsiz olduğunu söyledi ama örgüttekiler Gece diyormuş.”
-Yine durdu ve yutkundu. “Benim adımda Milan değil.” 
-Yüzüne boş boş baktım ve açıklama bekledim.
-“Ben senin Gece bildiğin kişinin oğluyum. Benim adım Gray Deesmi…” 
-Duyduğum şeyi bir süre idrak edemedim.
-“Ne anlamadım nasıl yani sen soyadın gece oğlu örgüt babam.. Bir dakika…” 
-Taşlar yerine oturduğunda vücudumun ürperdiğini hissettim Ağzım açık, gözbebeklerim yerinden fırlayacak gibiydi. Konuşmam için kendimi toparlamam gerekmişti.
-“Sen benim üvey babamın öz oğlusun… Gece benim babam mı..?”
-Kendi kendime kahkaha attım. “Sen… Üvey kardeşim…”
-Susuyordu. Yüzüme bakmıyordu.
-“Gray yüzüme bak! Susma bir şey söyle benim üvey babam öldü bir kere! Yalan söyleme…” sesim artık daha çaresiz çıkıyor, kahkahalarım hıçkırıklara dönüşüyordu.
-“Sana hazır olmadığını söylemiştim Natalia. Sakin olmalısın. Sana her şeyi baştan anlatmama izin ver..”
-Nefesimi toparlamaya ve yüzüne odaklanmaya çalıştım.
-“Bak… Yıllar önceydi. Babam, annemle beni terk edip başka bir kadınla evlenmişti. Birkaç ay sonra ise ben annemi kaybettim. Bu yaşıma kadar bana halam baktı. 17 yaşıma bastığım gün babamın Alia Deesmi diye bir kadınla yaşadığını, ve Natalia Deesmi isimli küçük bir kızlarının olduğunu öğrendim. Sen o zaman 11 yaşındaydın. Öz baban kaza sonucu vefat etmiş, annen de benim babamla evlenmişti. Sen 12 yaşına girdiğinde ise üvey babanda kayıplara karışarak öldü. Yani en azından siz yıllarca onu öldü sandınız. Oysaki üvey baban, örgüt kurma peşindeydi Natalia. Örgütünü kurdu ve beni bulup örgüt üyesi yapmak için yıllarca aradı. Arandığımı bildiğim için halamın evini terk etmek zorunda kaldım ve beni bulmamaları için saklanabildiğim kadar saklandım her şeyden, herkesten. Sonra pes etti tabii, Rusya’nın en tehlikeli örgütü haline gelmişlerdi çünkü. Bana ihtiyaçları yoktu. Bu yüzden seni istedi. Seni kaçırıp, örgüt üyesi yapmayı planlıyordu. Çünkü yazılımcıydın ve o kadar başarılıydın ki Rusya’da adının geçmediği yer yoktu. Bu sebeple seni kendilerine çalışman için zorlayacaklardı. Ama görünen o ki, şimdilik başaramadılar bak buradasın.”
-Duyduklarımı beynimde defalarca oynattım. Yıllarca üvey babam öldü sanıp kandırılmıştım. Ölmemiş, hayatımı zehir etmek için bunca yıl boyunca beklemişti. Bunları düşünürken gözyaşlarıma hakim olamıyordum. 
-“Peki sen bunları nereden öğrendin?” dedim hıçkırıklarımın arasından.
-“Ünlülük konusunda beni geçtin belki, ama yazılım ve casusluk konusunda geçemezsin.” Diyerek dudağının kenarını yukarıya doğru kıvırdı. 
-“Neyse ben yatmaya gidiyorum sen herhalde sabaha kadar ağlarsın.” 
-Bileğini tutarak durdurdum.
-“Bundan sonra ne yapacağız peki? Bana gerçekten yardım edecek misin?”
-Durdu ve ciddileşti. Birkaç saniye düşündü.
-“Senin geçtiğin yollardan ben tek başıma geçtim Natalia.” Dedi. Bir an yardım etmeyeceğini düşündüm fakat; “Ama sen tek geçmeyeceksin kardeşim.” Diye eklediğinde derin bir nefes verdim. Başımı teşekkür edercesine salladım Ayrıca kardeşim demesi nedense hoşuma gitmişti. Bir süredir kimse tarafından sahiplenici söz duymuyordum. Çünkü annem dışında kimsem yoktu, kimseye de ait değildim. Acaba annem ne yapıyordu şimdi? Onu özlemiştim…`
-        }
-    ];
 
-        // Duyuru çubuğu döngüsü
+                content: `“Kaç kişilerdi bunlar?”
+“Zordu, ama yaptık.”
+“Nasıl bir travma yaşattınız kızcağıza? Uyanmadı hala baksanıza.”
+
+Benden bahsettiklerini anlayarak gözlerimi araladım. Her şey puslu ve bulanık görünüyordu, bu yüzden yüzlerini seçemiyordum. Ellerimle gözlerimi ovuşturup kafamı omzumdan kaldırdım.
+
+“Senin konuşmanı bekliyormuş, baksana uyandı.”
+
+Bu kez konuşan bir kızdı ve sesi çok tanıdık geliyordu.
+
+“Uyandı uyanmasına da kendine gelmesi uzun sürecek gibi.”
+
+Evet evet, bu sesin sahibini kesinlikle tanıyordum. Görüşüm daha da netleştiğinde sesin sahibine baktım ve siyah saçlarından anında tanıdım.
+
+“Çağla?”
+
+“Ayyy görüyor musunuz ilk beni tanıdı!” dedi büyük bir sevinçle.
+
+“Çağla! Cidden sen misin…?” diye sordum. Yaşadıklarımdan sonra kendi gözüme bile güvenemez hale gelmiştim resmen.
+
+“Benim aşkım, benim. Mor atlı prensesin kurtarmaya geldi seni.” Diyerek eliyle kahramanmışçasına belirsiz hareketler yaptı.
+
+“Beyaz atlı prens değil miydi o Mor atlı prenses nereden çıktı?” dedi hala kim olduğunu anlayamadığım kişi.
+
+“Sus sen mor o bir kere!” diye yalandan çıkıştı Çağla.
+
+“Saçma sapan şakalarınızı bir kenara bırakıp beni aydınlatmaya ne dersiniz?” dedim halsizce, çatallı ve kısık çıkan sesimle.
+
+“Doğru sana anlatmayı unuttum! Şimdi önce şuradan başlayayım aşkım kaçırıldın.” Dedi Çağla. Cümlenin devamını getirmesini bekledim ama sessizliğini korumaya devam etti.
+
+“Çağla ben hafızamı kaybetmedim orasını biliyorum.” Dedim baygın gözlerle bakarak.
+
+“Ha sen devamını istiyorsun…” dedi ve yine sustu.
+
+“Çağla!” diye bağırdığımda gülmeye başlamıştı fakat sanırım boğazımın acısından haberi yoktu.
+
+“Neyse anlatayım. Kimin kaçırdığını ve neden kaçırdığını henüz bilmiyoruz. Başına bir şey geldiğini otoparkta 1 gündür duran araban, ofise gelmeyişin ve telefonlarını açmayışınla anladık. Zaten şirketimizin güvenlik ekipleri olduğunu biliyorsun. Onlara haber verdik ve konumunu bulduk. Ayrıca bu örgütü bir süredir araştırdığını biliyorduk. Tüm güvenlik ekibiyle baskın düzenledik ve yerini bulup seni oradan çıkardık. Ardından ekipler savaşmaya devam ederken de biz buraya kaçtık. Yerimizi bulmamaları için bu 40 metrekareden bile küçük evde birkaç gün idare etmemiz gerekiyor. Şimdi sen bize hatırladıklarını anlat Natalia.”
+
+Duyduklarımı sindirmeye ve anlamaya çalışırken odayı inceliyordum. Gerçekten çok küçüktü. 4 kişi bir odaya zor sığıyorduk. Cidden, diğer 2 kişi kimdi? Onları hala tanıyamamıştım.
+
+“Önce bir sorum var… Yanımızdaki 2 kişi kim?”
+
+Çağla güldü. “Ben size tanımaz demiştim! İddiayı ben kazandım.” Dedi yine neşeli bir tonda. “Solumdaki Kaan. Tanıyorsun zaten. Sağımdaki ise Milan. Örgüt liderinin öz oğlu olduğunu ve babasıyla düşman olup bize yardım etmek istediğini iddia ediyor.
+
+“İddia etmiyorum öyle.” Dedi Milan uyandığımdan beri sesini sadece 2. Kez duyuyordum.
+
+“Sana güvenmem için bir sebep söyle.” Dedim duygusuzca bir tonda.
+
+“Sebebim var ama öğrenmek istemezsin.” Dedi yanıma otururken.
+
+“Niyeymiş o?” Sorumla beraber bir süre gözlerimin içine baktı.
+
+“Gözlerinden belli oluyor çok şey yaşadığın. Daha fazlasını yaşamamak için şu an bilmemen daha iyi.” Dedi uyarırcasına ukala bir tonda ve yanımdan kalktı. Arkasından göz devirmeden duramadım.`
+
+            },
+
+            {
+                title: "5. BÖLÜM: GERÇEKLER VE GİZLENİŞLER",
+
+                content: `Bazı gerçekleri öğrenmek, gerçeğin kendisinden çok daha fazla acıtır insanın canını. Yıllarca sessiz bir kabullenişle, kendinizi kandırarak inşa ettiğiniz o korunaklı hayat, tek bir hakikatle yerle bir olur; geriye ise telafisi imkansız bir enkaz kalır. İşte bu yüzden, ruhumu bu yıkımdan korumak adına bilmemeyi, görmezden gelmeyi bir sığınak seçerim bazen. Ne var ki, kaçış ne kadar uzun sürerse sürsün, hayatın sarsılmaz bir kuralı vardır: Gerçekler unutulmaz, sadece uyur; ve siz ne kadar uzağa giderseniz gidin, o inatçı gölge en zayıf anınızda gelip sırtınıza yapışır.
+
+Saatler süren konuşmamızın ardından herkes bir kenara sızıp uyuya kalmıştı. Ben onlara yaşadıklarımı anlatmış, onlar ise Milan haricinde her defasında şaşırmışlardı. Tabii Nikolai’nin öldüğünü onlara söylememiştim. Yoksa Çağla’nın halini düşünmek bile istemiyorum.
+
+“Milan… Uyan” dedim fısıltıyla. Onunla konuşmamız gerekiyordu. Kimdi, ne biliyordu bana anlatacaktı.
+
+İkinci kez seslenmeme gerek kalmadan gözlerini açtı.
+
+“Benimle mutfağa gelir misin?” sözümü ikiletmeden ayağı kalktı. Ne konuşacağımızı tahmin ettiğine emindim.
+
+İkimizde mutfağa girince kapıyı sessizce kapattım. Işığı açma gereği duymamıştım.
+
+“Ne soracağımı biliyorsun. Kimsin sen Milan?”
+
+“Öğrenmeye hazır olduğuna emin misin Natalia?”
+
+Cevap vermedim fakat gözlerimi hazır olduğumu belirtircesine kıstım.
+
+“Tamam, anlatayım.” Tabureyi çekip üzerine oturdu ve eliyle benimde oturmamı gösterdi. Bende hızlıca karşısına geçtim.
+
+“Üvey babanı hatırlıyor musun Natalia?” sorduğu soru karşısında afalladım.
+
+“Ne? Sen nereden biliyorsun babamın üvey olduğunu?”
+
+“Böyle sürekli sorgulayıp sorularıma cevap vermeyeceksen gidip uyuyacağım seni çekemem soruma soruyla cevap verme.”
+
+Burnumdan bıkkınca nefes verip göz devirdim. Gerçi o karanlıkta bunu görüp görmediğinden emin değildim.
+
+“Tamam. Ne yalan söyleyeyim hayal meyal hatırlıyorum sadece.”
+
+Kafasını onaylarcasına salladı.
+
+“Peki ya adını hatırlıyor musun?”
+
+Bir süre düşündüm.
+
+“Vik… Viktur… Viktorovna Deesmi!”
+
+Babamın adını söylemek bile tuhaf hissettiriyordu bana.
+
+“Hatırlıyorsun.” Diyerek gülümsedi ve ekledi. “Kaçırıldığında örgütten birileriyle konuştun mu?”
+
+Konuşmaz mıyım Milan’cığım, konuştuğum iki herifte birbirinden beterdi!
+
+“Konuştum, Kutay ve Gece isimli iki kişiydi. Kutay örgütün yedinci üyesiymiş diğer dilsizi bilmiyorum beni sinir etmek dışında pek bir şey yapmadı. Ayrıca bunun babamla ilgisi ne?”
+
+Bir süre duraksadı. “Onu adı Gece değil.”
+
+“Onu anladık zaten tanıştığımda isimsiz olduğunu söyledi ama örgüttekiler Gece diyormuş.”
+
+Yine durdu ve yutkundu. “Benim adımda Milan değil.”
+
+Yüzüne boş boş baktım ve açıklama bekledim.
+
+“Ben senin Gece bildiğin kişinin oğluyum. Benim adım Gray Deesmi…”
+
+Duyduğum şeyi bir süre idrak edemedim.
+
+“Ne anlamadım nasıl yani sen soyadın gece oğlu örgüt babam.. Bir dakika…”
+
+Taşlar yerine oturduğunda vücudumun ürperdiğini hissettim Ağzım açık, gözbebeklerim yerinden fırlayacak gibiydi. Konuşmam için kendimi toparlamam gerekmişti.
+
+“Sen benim üvey babamın öz oğlusun… Gece benim babam mı..?”
+
+Kendi kendime kahkaha attım. “Sen… Üvey kardeşim…”
+
+Susuyordu. Yüzüme bakmıyordu.
+
+“Gray yüzüme bak! Susma bir şey söyle benim üvey babam öldü bir kere! Yalan söyleme…” sesim artık daha çaresiz çıkıyor, kahkahalarım hıçkırıklara dönüşüyordu.
+
+“Sana hazır olmadığını söylemiştim Natalia. Sakin olmalısın. Sana her şeyi baştan anlatmama izin ver..”
+
+Nefesimi toparlamaya ve yüzüne odaklanmaya çalıştım.
+
+“Bak… Yıllar önceydi. Babam, annemle beni terk edip başka bir kadınla evlenmişti. Birkaç ay sonra ise ben annemi kaybettim. Bu yaşıma kadar bana halam baktı. 17 yaşıma bastığım gün babamın Alia Deesmi diye bir kadınla yaşadığını, ve Natalia Deesmi isimli küçük bir kızlarının olduğunu öğrendim. Sen o zaman 11 yaşındaydın. Öz baban kaza sonucu vefat etmiş, annen de benim babamla evlenmişti. Sen 12 yaşına girdiğinde ise üvey babanda kayıplara karışarak öldü. Yani en azından siz yıllarca onu öldü sandınız. Oysaki üvey baban, örgüt kurma peşindeydi Natalia. Örgütünü kurdu ve beni bulup örgüt üyesi yapmak için yıllarca aradı. Arandığımı bildiğim için halamın evini terk etmek zorunda kaldım ve beni bulmamaları için saklanabildiğim kadar saklandım her şeyden, herkesten. Sonra pes etti tabii, Rusya’nın en tehlikeli örgütü haline gelmişlerdi çünkü. Bana ihtiyaçları yoktu. Bu yüzden seni istedi. Seni kaçırıp, örgüt üyesi yapmayı planlıyordu. Çünkü yazılımcıydın ve o kadar başarılıydın ki Rusya’da adının geçmediği yer yoktu. Bu sebeple seni kendilerine çalışman için zorlayacaklardı. Ama görünen o ki, şimdilik başaramadılar bak buradasın.”
+
+Duyduklarımı beynimde defalarca oynattım. Yıllarca üvey babam öldü sanıp kandırılmıştım. Ölmemiş, hayatımı zehir etmek için bunca yıl boyunca beklemişti. Bunları düşünürken gözyaşlarıma hakim olamıyordum.
+
+“Peki sen bunları nereden öğrendin?” dedim hıçkırıklarımın arasından.
+
+“Ünlülük konusunda beni geçtin belki, ama yazılım ve casusluk konusunda geçemezsin.” Diyerek dudağının kenarını yukarıya doğru kıvırdı.
+
+“Neyse ben yatmaya gidiyorum sen herhalde sabaha kadar ağlarsın.”
+
+Bileğini tutarak durdurdum.
+
+“Bundan sonra ne yapacağız peki? Bana gerçekten yardım edecek misin?”
+
+Durdu ve ciddileşti. Birkaç saniye düşündü.
+
+“Senin geçtiğin yollardan ben tek başıma geçtim Natalia.” Dedi. Bir an yardım etmeyeceğini düşündüm fakat; “Ama sen tek geçmeyeceksin kardeşim.” Diye eklediğinde derin bir nefes verdim. Başımı teşekkür edercesine salladım Ayrıca kardeşim demesi nedense hoşuma gitmişti. Bir süredir kimse tarafından sahiplenici söz duymuyordum. Çünkü annem dışında kimsem yoktu, kimseye de ait değildim. Acaba annem ne yapıyordu şimdi? Onu özlemiştim…`
+
+            }
+
+        ];
+
+
+        /* =====================================================
+           DUYURULAR
+           ===================================================== */
 
         const announcements = [
             "Elisya Books sitesi şimdi açıldı!",
             "Okyanus Dalgaları bölümleri şimdi yayında!"
         ];
+
         let annIndex = 0;
+
         setInterval(() => {
-            annIndex = (annIndex + 1) % announcements.length;
-            const annElement = document.getElementById("announcement");
-            if(annElement) annElement.innerText = announcements[annIndex];
+
+            annIndex =
+                (annIndex + 1) %
+                announcements.length;
+
+            const annElement =
+                document.getElementById("announcement");
+
+            if (annElement) {
+                annElement.innerText =
+                    announcements[annIndex];
+            }
+
         }, 7000);
 
-        // Tema Değiştirme
-        document.getElementById("theme-toggle-btn").addEventListener("click", function() {
+
+        /* =====================================================
+           TEMA DEĞİŞTİRME
+           ===================================================== */
+
+        const themeButton =
+            document.getElementById("theme-toggle-btn");
+
+        themeButton.addEventListener("click", function () {
+
             const body = document.body;
+
             if (body.getAttribute("data-theme") === "dark") {
+
                 body.removeAttribute("data-theme");
+
                 this.innerText = "Karanlık Mod";
+
             } else {
+
                 body.setAttribute("data-theme", "dark");
+
                 this.innerText = "Aydınlık Mod";
+
             }
+
         });
 
-        // Kitap Okuma Ekranını Açma
-        document.getElementById("read-book-btn").addEventListener("click", function() {
-            document.getElementById("main-content").style.display = "none";
-            document.getElementById("book-reader-view").style.display = "block";
-            renderAccordion();
-            window.scrollTo(0, 0);
-        });
 
-        // Kitap Okuma Ekranını Kapatma
-        document.getElementById("close-reader-btn").addEventListener("click", function() {
-            document.getElementById("book-reader-view").style.display = "none";
-            document.getElementById("main-content").style.display = "block";
-        });
+        /* =====================================================
+           KİTAP OKUMA EKRANINI AÇ
+           ===================================================== */
 
-        // Dinamik Akordeon Listesi
+        document
+            .getElementById("read-book-btn")
+            .addEventListener("click", function () {
+
+                document
+                    .getElementById("main-content")
+                    .style.display = "none";
+
+                document
+                    .getElementById("book-reader-view")
+                    .style.display = "block";
+
+                renderAccordion();
+
+                window.scrollTo({
+                    top: 0,
+                    behavior: "smooth"
+                });
+
+            });
+
+
+        /* =====================================================
+           ANA SAYFAYA DÖN
+           ===================================================== */
+
+        document
+            .getElementById("close-reader-btn")
+            .addEventListener("click", function () {
+
+                document
+                    .getElementById("book-reader-view")
+                    .style.display = "none";
+
+                document
+                    .getElementById("main-content")
+                    .style.display = "block";
+
+                window.scrollTo({
+                    top: 0,
+                    behavior: "smooth"
+                });
+
+            });
+
+
+        /* =====================================================
+           BÖLÜMLERİ OLUŞTUR
+           ===================================================== */
+
         function renderAccordion() {
-            const container = document.getElementById("accordion-container");
+
+            const container =
+                document.getElementById("accordion-container");
+
             container.innerHTML = "";
 
+
             bookData.forEach((chapter, index) => {
-                const itemDiv = document.createElement("div");
-                itemDiv.className = "accordion-item";
 
-                const headerBtn = document.createElement("button");
-                headerBtn.className = "accordion-header";
-                headerBtn.type = "button";
-                headerBtn.innerHTML = `<span>${chapter.title}</span> <span id="icon-${index}">+</span>`;
-                headerBtn.onclick = () => toggleAccordion(index);
+                const itemDiv =
+                    document.createElement("div");
 
-                const contentDiv = document.createElement("div");
-                contentDiv.className = "accordion-content";
-                contentDiv.id = `content-${index}`;
-                contentDiv.innerText = chapter.content;
+                itemDiv.className =
+                    "accordion-item";
+
+
+                const headerBtn =
+                    document.createElement("button");
+
+                headerBtn.className =
+                    "accordion-header";
+
+                headerBtn.type =
+                    "button";
+
+
+                headerBtn.innerHTML = `
+                    <span>${chapter.title}</span>
+                    <span id="icon-${index}">+</span>
+                `;
+
+
+                headerBtn.onclick = function () {
+                    toggleAccordion(index);
+                };
+
+
+                const contentDiv =
+                    document.createElement("div");
+
+                contentDiv.className =
+                    "accordion-content";
+
+                contentDiv.id =
+                    `content-${index}`;
+
+
+                /*
+                 * textContent kullanıyoruz.
+                 * Böylece kitap metnindeki HTML olarak
+                 * yorumlanabilecek karakterler sorun çıkarmaz.
+                 */
+                contentDiv.textContent =
+                    chapter.content;
+
 
                 itemDiv.appendChild(headerBtn);
+
                 itemDiv.appendChild(contentDiv);
+
                 container.appendChild(itemDiv);
+
             });
+
         }
+
+
+        /* =====================================================
+           BÖLÜM AÇ / KAPAT
+           ===================================================== */
 
         function toggleAccordion(index) {
-            const targetContent = document.getElementById(`content-${index}`);
-            const targetIcon = document.getElementById(`icon-${index}`);
-            const isCurrentlyOpen = targetContent.style.display === "block";
 
-            document.querySelectorAll(".accordion-content").forEach(el => el.style.display = "none");
-            document.querySelectorAll("[id^='icon-']").forEach(el => el.innerText = "+");
+            const targetContent =
+                document.getElementById(
+                    `content-${index}`
+                );
+
+            const targetIcon =
+                document.getElementById(
+                    `icon-${index}`
+                );
+
+
+            const isCurrentlyOpen =
+                targetContent.style.display === "block";
+
+
+            /*
+             * Önce bütün bölümleri kapat.
+             */
+
+            document
+                .querySelectorAll(".accordion-content")
+                .forEach(function (element) {
+
+                    element.style.display = "none";
+
+                });
+
+
+            /*
+             * Bütün + / − işaretlerini sıfırla.
+             */
+
+            document
+                .querySelectorAll("[id^='icon-']")
+                .forEach(function (element) {
+
+                    element.innerText = "+";
+
+                });
+
+
+            /*
+             * Tıklanan bölüm kapalıysa aç.
+             */
 
             if (!isCurrentlyOpen) {
-                targetContent.style.display = "block";
-                targetIcon.innerText = "−";
+
+                targetContent.style.display =
+                    "block";
+
+                targetIcon.innerText =
+                    "−";
+
             }
+
         }
+
+
+        /* =====================================================
+           ARAMA
+           ===================================================== */
+
+        const searchInput =
+            document.getElementById("search-input");
+
+        searchInput.addEventListener("input", function () {
+
+            const searchText =
+                this.value
+                    .toLowerCase()
+                    .trim();
+
+
+            const bookCards =
+                document.querySelectorAll(
+                    ".book-card"
+                );
+
+
+            bookCards.forEach(function (card) {
+
+                const searchableText =
+                    card
+                        .getAttribute("data-search")
+                        .toLowerCase();
+
+
+                if (
+                    searchText === "" ||
+                    searchableText.includes(searchText)
+                ) {
+
+                    card.style.display = "";
+
+                } else {
+
+                    card.style.display = "none";
+
+                }
+
+            });
+
+        });
+
     </script>
+
 </body>
 </html>
